@@ -6,15 +6,18 @@ VERSION=$(shell cat ./VERSION)
 LDFLAGS=-s -w -X 'e-backend/internal.BuildTime=$(BUILD_TIME)' -X 'e-backend/internal.Version=$(VERSION)'
 TAGS=all
 
+all: clean build
+
 build:
 	$(info ************ BUILDING EXECUTABLE FILE ************)
 	go build -ldflags "$(LDFLAGS)" -tags="$(TAGS)" -o ./build/e-backend
 
 clean:
 	$(info ************ CLEANING ************)
-	rm -rf build/*
-	rmdir build
+	rm -rf ./build
 
 test:
 	$(info ************ RUNNING TESTS ************)
 	go test ./...
+
+.PHONY: all

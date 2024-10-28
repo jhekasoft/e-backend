@@ -1,5 +1,12 @@
 # e-backend
 
+## Create database
+
+```bash
+sudo -iu postgres
+createdb ebackend
+```
+
 ## Prepare
 
 ```bash
@@ -11,7 +18,7 @@ And then edit `.e-backend` file.
 ## Run HTTP-server
 
 ```bash
-go run main.go
+go run -tags=all main.go serve
 ```
 
 ## Building
@@ -26,4 +33,10 @@ Clean:
 
 ```bash
 make clean
+```
+
+Run binary:
+
+```bash
+./build/e-backend serve
 ```
