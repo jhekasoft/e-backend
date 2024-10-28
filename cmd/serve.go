@@ -22,24 +22,20 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
+	"e-backend/internal"
+	"e-backend/internal/models"
+	"log"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // serveCmd represents the serve command
 var serveCmd = &cobra.Command{
 	Use:   "serve",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("serve called")
-	},
+	Short: "Run HTTP-server",
+	Long:  `Run HTTP-server.`,
+	Run:   runHTTPApp,
 }
 
 func init() {
@@ -54,4 +50,15 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// serveCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+}
+
+func runHTTPApp(cmd *cobra.Command, args []string) {
+	var conf models.Config
+	err := viper.Unmarshal(&conf)
+	if err != nil {
+		log.Fatalf("unable to decode into struct, %v", err)
+	}
+
+	app := internal.NewHTTPApp(conf)
+	app.Run()
 }

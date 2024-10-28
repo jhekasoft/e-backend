@@ -22,6 +22,8 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"e-backend/internal"
+	"e-backend/internal/models"
 	"fmt"
 	"os"
 
@@ -53,7 +55,7 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
+	cobra.OnInitialize(printBanner, initConfig)
 
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
@@ -63,7 +65,7 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -76,16 +78,35 @@ func initConfig() {
 		home, err := os.UserHomeDir()
 		cobra.CheckErr(err)
 
-		// Search config in home directory with name ".e-backend" (without extension).
+		// Search config in home directory with name ".e-backend" (without extension)
+		// and in work directory.
 		viper.AddConfigPath(home)
+		viper.AddConfigPath(".")
 		viper.SetConfigType("yaml")
 		viper.SetConfigName(".e-backend")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match
 
+	// Defaults
+	viper.SetDefault("Mode", "develop")
+	viper.SetDefault("HTTP", models.ConfigHTTP{Port: 1988, BaseURL: "http://localhost:1988"})
+
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
 	}
+}
+
+func printBanner() {
+	fmt.Print(`
+▗▄▄▄▖▗▄▄▖  ▗▄▖  ▗▄▄▖▗▖ ▗▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄ 
+▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌   ▐▌▗▞▘▐▌   ▐▛▚▖▐▌▐▌  █
+▐▛▀▀▘▐▛▀▚▖▐▛▀▜▌▐▌   ▐▛▚▖ ▐▛▀▀▘▐▌ ▝▜▌▐▌  █
+▐▙▄▄▖▐▙▄▞▘▐▌ ▐▌▝▚▄▄▖▐▌ ▐▌▐▙▄▄▖▐▌  ▐▌▐▙▄▄▀
+
+`)
+
+	fmt.Printf("Version: %s\n", internal.Version)
+	fmt.Printf("Build time: %s\n", internal.BuildTime)
 }
