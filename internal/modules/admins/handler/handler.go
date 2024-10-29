@@ -11,11 +11,11 @@ import (
 	"gorm.io/gorm"
 )
 
-type Handler struct {
-	service *service.Service
-}
-
 type (
+	Handler struct {
+		service *service.Service
+	}
+
 	AdminListFilter struct {
 		Offset int               `query:"Offset"`
 		Limit  int               `query:"Limit"`
@@ -80,7 +80,7 @@ func (h *Handler) CreateItem(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-func (h *Handler) GetListController(c echo.Context) error {
+func (h *Handler) GetList(c echo.Context) error {
 	req := new(AdminListFilter)
 	err := c.Bind(req)
 	if err != nil {

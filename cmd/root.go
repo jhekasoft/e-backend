@@ -89,7 +89,7 @@ func initConfig() {
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// Defaults
-	viper.SetDefault("Mode", "develop")
+	viper.SetDefault("Mode", models.AppModeProduction)
 	viper.SetDefault("HTTP", models.ConfigHTTP{Port: 1988, BaseURL: "http://localhost:1988"})
 
 	// If a config file is found, read it in.

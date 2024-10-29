@@ -74,9 +74,14 @@ func (a *HTTPApp) Run() {
 	a.Core.BuildTime = BuildTime
 
 	// Connect to the database
+	dbLogLevel := logger.Error
+	if a.Core.Config.IsDevelop() {
+		dbLogLevel = logger.Info
+	}
+
 	db, err := gorm.Open(postgres.Open(a.Core.Config.DB.DSN), &gorm.Config{
 		TranslateError: true,
-		Logger:         logger.Default.LogMode(logger.Info),
+		Logger:         logger.Default.LogMode(dbLogLevel),
 	})
 	if err != nil {
 		log.Fatalln(err)

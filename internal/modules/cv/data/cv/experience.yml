@@ -1,0 +1,55 @@
+- startYear: 2011
+  endYear: 2013
+  title: Web Developer (backend, PHP, JS)
+  company: MCity
+  companyUrl: http://mcstudio.com.ua
+  location: Mariupol
+  desc: "Participated in projects: 0629.com.ua, 44.ua"
+
+- startYear: 2013
+  endYear: 2014
+  title: Backend Developer (PHP, JS)
+  company: MobiDev
+  companyUrl: https://mobidev.biz
+  location: Mariupol
+  desc: ~
+
+- startYear: 2014
+  endYear: 2014
+  title: System Developer, Web Developer (PHP, JS, Perl, Python, C, C++, bash)
+  company: Evogence
+  companyUrl: ~
+  location: Kyiv
+  desc: ~
+
+- startYear: 2014
+  endYear: 2017
+  title: Backend Developer (Scala, PHP, JS)
+  company: Megogo
+  companyUrl: https://megogo.net
+  location: Kyiv
+  desc: ~
+
+- startYear: 2018
+  endYear: 2019
+  title: Backend, Full Stack Developer (node.js, JS (Vue.js, Nuxt.js), Go, Dart (Flutter))
+  company: 1000.tech
+  companyUrl: https://1000.tech
+  location: Kyiv
+  desc: ~
+
+- startYear: 2020
+  endYear: 2023
+  title: Backend Developer (Go, TypeScript, node.js)
+  company: LLC "Telecard"
+  companyUrl: ~
+  location: Kyiv
+  desc: ~
+
+- startYear: 2024
+  endYear: ~
+  title: Backend Developer (Go), cryptography
+  company: LLC "Avtor"
+  companyUrl: ~
+  location: Kyiv
+  desc: ~

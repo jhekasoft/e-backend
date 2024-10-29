@@ -22,7 +22,7 @@ func (m *AdminsModule) Run(c *internalModels.Core) error {
 	services := service.NewService(repo)
 	h := handler.NewHandler(services)
 
-	c.Echo.GET("/admins", h.GetListController)
+	c.Echo.GET("/admins", h.GetList)
 	c.Echo.GET("/admins/:id", h.GetItem)
 	c.Echo.POST("/admins", h.CreateItem)
 	c.Echo.PUT("/admins/:id", h.UpdateItem)

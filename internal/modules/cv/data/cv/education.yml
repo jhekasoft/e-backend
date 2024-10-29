@@ -1,0 +1,15 @@
+- startYear: 1995
+  endYear: 2005
+  school: "Secondary school #11"
+  degree: "graduate"
+  fieldOfStudy: Physical and Mathematical
+  location: Mariupol
+  desc: ~
+
+- startYear: 2005
+  endYear: 2009
+  school: Pre-Azov State Technical University
+  degree: "Bachelor's degree"
+  fieldOfStudy: Applied Mathematics, Computer Science
+  location: Mariupol
+  desc: ~

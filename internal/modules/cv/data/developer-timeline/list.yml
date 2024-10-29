@@ -1,0 +1,127 @@
+- year: 2003
+  desc:
+    - "**Sinclair BASIC**, ZX Spectrum"
+    - MS Windows
+    - "**Turbo Pascal**, MS DOS"
+
+- year: 2004
+  desc:
+    - "**Visual Basic**, Windows"
+    - "Borland **Delphi**"
+    - Borland Database Engine
+
+- year: 2005
+  desc:
+    - "**HTML**, **CSS**"
+    - "**JavaScript**"
+    - "Borland **C++ Builder**"
+    - "**C**"
+    - Firebird (DBMS)
+    - Red Hat Linux
+
+- year: 2006
+  desc:
+    - "**Visual C++**"
+    - .NET Framework
+
+- year: 2007
+  desc:
+    - "**Java ME**, **Java SE**"
+    - "**Assembler**"
+
+- year: 2008
+  desc:
+    - "**PHP**"
+    - "**MySQL**"
+    - jQuery
+    - Ubuntu
+    - Debian
+
+- year: 2009
+  desc:
+    - "**Python**"
+    - Fedora
+    - openSUSE
+
+- year: 2010
+  desc:
+    - "**Lua**"
+    - ArchLinux
+    - SVN
+
+- year: 2011
+  desc:
+    - Zend Framework
+    - Memcached
+    - Git
+
+- year: 2012
+  desc:
+    - Zend Framework 2
+    - PostgreSQL
+    - MongoDB
+    - Yii Framework
+
+- year: 2013
+  desc:
+    - "**Qt**"
+    - Redis
+    - Gearman
+    - RabbitMQ
+
+- year: 2014
+  desc:
+    - "**OpenCV**"
+    - Ruby
+    - Perl
+    - Symphony
+    - Laravel
+    - Sass
+    - Less
+    - CoffeeScript
+
+- year: 2015
+  desc:
+    - "**Scala**"
+    - Play Framework
+    - "**Node.js**"
+    - gulp
+
+- year: 2016
+  desc:
+    - Scalaz
+    - Catz
+    - Akka
+    - CouchDB
+
+- year: 2017
+  desc:
+    - "**Go**"
+
+- year: 2018
+  desc:
+    - GTK+ 3
+    - "**Vue.js**"
+
+- year: 2019
+  desc:
+    - "**Flutter**"
+    - Dart
+    - "**NuxtJS**"
+
+- year: 2020
+  desc:
+    - "**Docker**"
+    - TypeScript
+
+- year: 2021
+  desc:
+    - MQTT
+    - "**React.js**"
+    - Next.js
+    - TypeORM
+    - GORM
+
+- year: 2023
+  desc:
+    - "**NestJS**"

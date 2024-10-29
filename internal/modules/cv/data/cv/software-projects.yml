@@ -1,0 +1,65 @@
+- year: 2004
+  title: Тамаглючі
+  url: https://google.com/search?q=тамаглючи
+  desc: "Desktop Application, game (Windows), Technologies: Delphi"
+  imageUrl: public/software-projects/tamagluchi.jpg
+
+- year: 2004
+  title: JS Alarm
+  url: https://google.com/search?q=jhekasoft+js+alarm
+  desc: "Desktop Application (Windows), Technologies: C++ Builder"
+  imageUrl: public/software-projects/jsalarm.jpg
+
+- year: 2010
+  title: Ліфтер
+  url: https://google.com/search?q=jhekasoft+лифтёр+игра
+  desc: "Game (crossplatform), Open-source, Technologies: Lua, INSTEAD"
+  imageUrl: public/software-projects/lifter.jpg
+
+- year: 2010
+  title: Ліфтер 2
+  url: https://google.com/search?q=jhekasoft+лифтёр%202+игра
+  desc: "Game (crossplatform), Open-source, Technologies: Lua, INSTEAD"
+  imageUrl: public/software-projects/lifter2.jpg
+
+- year: 2012
+  title: Пам'ять
+  url: https://google.com/search?q=jhekasoft+память+игра
+  desc: "Game (crossplatform), Open-source, Technologies: Lua, INSTEAD"
+  imageUrl: public/software-projects/memory.jpg
+
+- year: 2015
+  title: Instead Manager
+  url: https://jhekasoft.github.io/insteadman/instead-manager-1
+  desc: "Desktop Application (crossplatform), Open-source, Technologies: Python"
+  imageUrl: public/software-projects/insteadman1.jpg
+
+- year: 2015
+  title: InsteadMan 2
+  url: https://jhekasoft.github.io/insteadman/en/insteadman2
+  desc: "Desktop Application (crossplatform), Open-source, Technologies: JavaScript, nw.js, node.js"
+  imageUrl: public/software-projects/insteadman2.jpg
+
+- year: 2018
+  title: InsteadMan 3
+  url: https://jhekasoft.github.io/insteadman/en/
+  desc: "Desktop Application (crossplatform), Open-source, Technologies: Go, GTK+ 3"
+  imageUrl: public/software-projects/insteadman3.jpg
+
+- year: 2019
+  title: WidgetForSite
+  url: https://widgetfor.site/
+  desc: "Web Service, Technologies: JavaScript, node.js, Vue.js, Nuxt.js"
+  imageUrl: public/software-projects/widgetforsite.jpg
+
+- year: 2023
+  title: СУМ-11. Словник української мови
+  url: https://chrome.google.com/webstore/detail/сум-11-словник-українсько/hnhgnehbgpinmdoiigabcohnpeopfjkb
+  desc: "Chrome extension, Technologies: TS, React.js, Chrome Extension API"
+  imageUrl: public/software-projects/sum-extension.jpg
+
+- year: 2023
+  title: СУМ-11. Словник української мови (бот)
+  url: https://t.me/sum11_bot
+  desc: "Telegram bot, Technologies: TS, Grammy, Telegram Bot API"
+  imageUrl: public/software-projects/sum-bot.jpg
