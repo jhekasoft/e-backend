@@ -22,8 +22,12 @@ clean:
 	$(info ************ CLEANING ************)
 	rm -rf ./build
 
+run:
+	$(info ************ RUNNING ************)
+	go run -ldflags "$(LDFLAGS)" -tags="$(TAGS)" main.go serve
+
 test:
 	$(info ************ RUNNING TESTS ************)
 	go test ./...
 
-.PHONY: all
+.PHONY: all run
