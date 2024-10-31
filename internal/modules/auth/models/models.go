@@ -4,6 +4,8 @@ import (
 	"time"
 
 	"gorm.io/gorm"
+
+	internalModels "e-backend/internal/models"
 )
 
 type User struct {
@@ -14,3 +16,5 @@ type User struct {
 	ActivatedAt *time.Time `gorm:"index"`
 	Password    string     `json:"-"`
 }
+
+type AuthClaims internalModels.AuthClaims

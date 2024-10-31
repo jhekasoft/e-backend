@@ -1,6 +1,7 @@
 package internal
 
 import (
+	internalHttp "e-backend/internal/http"
 	"e-backend/internal/models"
 	"e-backend/internal/modules"
 	"fmt"
@@ -33,25 +34,6 @@ func (cv *CustomValidator) Validate(i interface{}) error {
 		return err
 	}
 	return nil
-}
-
-type CustomValidationError struct {
-	Message  string
-	Messages map[string]string
-}
-
-func (e *CustomValidationError) Error() string {
-	return e.Message
-}
-
-func NewCustomValidationError(message string, messages map[string]string) *CustomValidationError {
-	return &CustomValidationError{message, messages}
-}
-
-func NewCustomValidationFieldError(message string, field string) *CustomValidationError {
-	messages := map[string]string{}
-	messages[field] = message
-	return &CustomValidationError{message, messages}
 }
 
 type HTTPErrorResponse struct {
@@ -156,7 +138,7 @@ func (a *HTTPApp) httpErrorHandler(err error, c echo.Context) {
 			messages[err.Field()] = message
 		}
 		msg = HTTPErrorResponse{Message: "Помилка валідації форми", Messages: messages}
-	case *CustomValidationError:
+	case *internalHttp.CustomValidationError:
 		code = http.StatusBadRequest
 		msg = HTTPErrorResponse{Message: e.Error(), Messages: e.Messages}
 	default:

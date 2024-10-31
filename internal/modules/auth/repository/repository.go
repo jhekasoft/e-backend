@@ -41,3 +41,12 @@ func (r *Repository) Delete(id uint) (err error) {
 	err = r.db.Delete(&models.User{}, id).Error
 	return
 }
+
+func (r *Repository) FindByUsernameOrEmail(credential string) (item *models.User, err error) {
+	err = r.db.
+		Where("username = ?", credential).
+		Or("email = ?", credential).
+		First(&item).
+		Error
+	return
+}
