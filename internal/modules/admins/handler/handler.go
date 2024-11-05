@@ -2,19 +2,22 @@ package handler
 
 import (
 	"e-backend/internal/modules/admins/models"
-	"e-backend/internal/modules/admins/service"
 	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
+
+	im "e-backend/internal/models"
 )
 
 type (
 	Handler struct {
-		service *service.Service
+		service AdminService
 	}
+
+	AdminService im.Service[models.Admin, models.AdminListFilter]
 
 	AdminListFilter struct {
 		Offset int               `query:"Offset"`
@@ -51,7 +54,7 @@ type (
 	}
 )
 
-func NewHandler(service *service.Service) *Handler {
+func NewHandler(service AdminService) *Handler {
 	return &Handler{service}
 }
 

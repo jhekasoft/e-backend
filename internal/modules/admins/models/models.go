@@ -18,6 +18,10 @@ type Admin struct {
 	Password string    `json:"-"`
 }
 
+func (m Admin) GetID() uint {
+	return m.ID
+}
+
 type AdminListFilter struct {
 	Offset int
 	Limit  int
