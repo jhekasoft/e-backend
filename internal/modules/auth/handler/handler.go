@@ -31,8 +31,6 @@ type (
 		Data models.User
 	}
 
-	CreateUserResponse GetUserResponse
-
 	SignInRequest struct {
 		Credential string `validate:"required"`
 		Password   string `validate:"required,gte=6"`
@@ -42,6 +40,8 @@ type (
 		Token string
 		Data  models.User
 	}
+
+	CreateUserResponse SignInResponse
 )
 
 func NewHandler(service *service.Service) *Handler {
@@ -64,12 +64,12 @@ func (h *Handler) CreateItem(c echo.Context) error {
 		Name:     req.Name,
 		Password: req.Password, // TODO: add hashing
 	}
-	createdItem, err := h.service.Create(item)
+	createdItem, token, err := h.service.Create(item)
 	if err != nil {
 		return err
 	}
 
-	resp := CreateUserResponse{Data: *createdItem}
+	resp := CreateUserResponse{Token: token, Data: *createdItem}
 	return c.JSON(http.StatusOK, resp)
 }
 
@@ -83,7 +83,7 @@ func (h *Handler) SignIn(c echo.Context) error {
 		return err
 	}
 
-	token, user, err := h.service.SignIn(req.Credential, req.Password)
+	user, token, err := h.service.SignIn(req.Credential, req.Password)
 	if errors.Is(err, service.ErrAuthUserNotFound) {
 		return internalHttp.NewCustomValidationFieldError(
 			"User is not found or password is incorrect",

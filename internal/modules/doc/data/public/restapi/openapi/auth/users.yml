@@ -1,0 +1,26 @@
+post:
+  tags:
+    - Auth
+  summary: Sign Up user
+  description:
+    Sign Up (register) user. After registration, an authorization token
+    is issued. Therefore, you do not need to Sign In separately
+  requestBody:
+    description: Sign Up data
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./schemas.yml#/schemas/CreateUserRequest"
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              Token:
+                type: string
+              Data:
+                $ref: "./schemas.yml#/schemas/User"

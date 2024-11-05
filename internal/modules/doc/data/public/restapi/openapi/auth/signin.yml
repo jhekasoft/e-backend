@@ -1,0 +1,24 @@
+post:
+  tags:
+    - Auth
+  summary: Sign In user
+  description:
+    Sign In user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./schemas.yml#/schemas/SignInRequest"
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              Token:
+                type: string
+              Data:
+                $ref: "./schemas.yml#/schemas/User"

@@ -1,0 +1,31 @@
+openapi: 3.0.3
+info:
+  title: e-backend
+  description: e-backend REST API | [Documentation](/doc)
+  version: 0.0.2
+tags:
+  - name: Health
+    description: Health API
+  - name: Auth
+    description: Authorization API
+paths:
+  /health:
+    $ref: "health/health.yml"
+  /auth/users:
+    $ref: "auth/users.yml"
+  /auth/signin:
+    $ref: "auth/signin.yml"
+  /auth/users/me:
+    $ref: "auth/users-me.yml"
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    UnauthorizedResponse:
+      type: object
+      properties:
+        Message:
+          type: string
+          example: "missing or malformed jwt"

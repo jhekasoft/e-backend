@@ -22,15 +22,25 @@ func NewService(repo *repository.Repository, jwtSecretKey string) *Service {
 	return &Service{repo, jwtSecretKey}
 }
 
-func (s *Service) Create(item models.User) (*models.User, error) {
+func (s *Service) Create(item models.User) (user *models.User, token string, err error) {
 	// Hash password
 	passwordHash, err := s.hashPassword(item.Password)
 	if err != nil {
-		return nil, err
+		return
 	}
 	item.Password = passwordHash
 
-	return s.repo.Create(item)
+	user, err = s.repo.Create(item)
+	if err != nil {
+		return
+	}
+
+	token, err = s.generateUserJWTToken(*user)
+	if err != nil {
+		return
+	}
+
+	return
 }
 
 func (s *Service) Update(id uint, item models.User) (*models.User, error) {
@@ -45,7 +55,7 @@ func (s *Service) Delete(id uint) (err error) {
 	return s.repo.Delete(id)
 }
 
-func (s *Service) SignIn(credential, password string) (token string, user *models.User, err error) {
+func (s *Service) SignIn(credential, password string) (user *models.User, token string, err error) {
 	user, err = s.repo.FindByUsernameOrEmail(credential)
 	if err != nil {
 		err = ErrAuthUserNotFound

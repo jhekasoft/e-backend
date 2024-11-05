@@ -1,0 +1,55 @@
+schemas:
+  User:
+    type: object
+    properties:
+      ID:
+        type: integer
+        format: uint64
+        example: 1
+      Username:
+        type: string
+        example: user111
+      Email:
+        type: string
+        example: user111@gmail.com
+      Name:
+        type: string
+        example: Kit
+      CreatedAt:
+        type: string
+        example: "2024-10-31T16:32:52.780156+02:00"
+      UpdatedAt:
+        type: string
+        example: "2024-10-31T16:32:52.780156+02:00"
+
+  CreateUserRequest:
+    type: object
+    properties:
+      Username:
+        type: string
+        example: user111
+      Email:
+        type: string
+        example: user111@gmail.com
+      Name:
+        type: string
+        example: Kit
+      Password:
+        type: string
+    required:
+      - Username
+      - Email
+      - Name
+      - Password
+
+  SignInRequest:
+    type: object
+    properties:
+      Credential:
+        type: string
+        example: user111
+      Password:
+        type: string
+    required:
+      - Credential
+      - Password
