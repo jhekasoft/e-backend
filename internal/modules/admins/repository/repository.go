@@ -1,20 +1,20 @@
 package repository
 
 import (
+	"e-backend/internal/crud"
 	"e-backend/internal/modules/admins/models"
-	ir "e-backend/internal/repository"
 
 	"gorm.io/gorm"
 )
 
 type Repository struct {
-	ir.CRUDRepository[models.Admin, models.AdminListFilter]
+	crud.Repository[models.Admin, models.AdminListFilter]
 }
 
 func NewRepository(db *gorm.DB) *Repository {
 	listOrder := "id desc"
-	var listScope ir.ListScopeFunc[models.AdminListFilter] = listScope
-	return &Repository{*ir.NewRepository[models.Admin](db, &listScope, listOrder)}
+	var listScope crud.ListScopeFunc[models.AdminListFilter] = listScope
+	return &Repository{*crud.NewRepository[models.Admin](db, &listScope, listOrder)}
 }
 
 func listScope(filter models.AdminListFilter) func(db *gorm.DB) *gorm.DB {

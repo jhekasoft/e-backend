@@ -1,8 +1,6 @@
 package models
 
-import (
-	ir "e-backend/internal/repository"
-)
+import "e-backend/internal/crud"
 
 // AdminRole is role of the administrator.
 type AdminRole string
@@ -13,7 +11,7 @@ const (
 )
 
 type Admin struct {
-	ir.CRUDModel
+	crud.Model
 	Username string    `gorm:"uniqueIndex"`
 	Name     string    `gorm:"index"`
 	Role     AdminRole `gorm:"index"`
@@ -21,7 +19,7 @@ type Admin struct {
 }
 
 type AdminListFilter struct {
-	ir.ListFilter
+	crud.ListFilter
 	Role   *AdminRole
 	Search string
 }

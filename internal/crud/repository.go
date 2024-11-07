@@ -1,16 +1,14 @@
-package repository
+package crud
 
 import (
-	"e-backend/internal/models"
-
 	"gorm.io/gorm"
 )
 
-type CRUDModel struct {
+type Model struct {
 	gorm.Model
 }
 
-func (m CRUDModel) GetID() uint {
+func (m Model) GetID() uint {
 	return m.ID
 }
 
@@ -27,23 +25,23 @@ func (f ListFilter) GetLimit() int {
 	return f.Limit
 }
 
-type ListScopeFunc[F models.CRUDListFilter] func(F) func(db *gorm.DB) *gorm.DB
+type ListScopeFunc[F CRUDListFilter] func(F) func(db *gorm.DB) *gorm.DB
 
-type CRUDRepository[M models.CRUDModel, F models.CRUDListFilter] struct {
+type Repository[M CRUDModel, F CRUDListFilter] struct {
 	db        *gorm.DB
 	listScope *ListScopeFunc[F]
 	listOrder any
 }
 
-func NewRepository[M models.CRUDModel, F models.CRUDListFilter](db *gorm.DB, listScope *ListScopeFunc[F], listOrder any) *CRUDRepository[M, F] {
-	return &CRUDRepository[M, F]{db, listScope, listOrder}
+func NewRepository[M CRUDModel, F CRUDListFilter](db *gorm.DB, listScope *ListScopeFunc[F], listOrder any) *Repository[M, F] {
+	return &Repository[M, F]{db, listScope, listOrder}
 }
 
-func (r *CRUDRepository[M, F]) GetDB() *gorm.DB {
+func (r *Repository[M, F]) GetDB() *gorm.DB {
 	return r.db
 }
 
-func (r *CRUDRepository[M, F]) Create(item M) (createdItem *M, err error) {
+func (r *Repository[M, F]) Create(item M) (createdItem *M, err error) {
 	if err := r.db.Create(&item).Error; err != nil {
 		return nil, err
 	}
@@ -52,7 +50,7 @@ func (r *CRUDRepository[M, F]) Create(item M) (createdItem *M, err error) {
 	return
 }
 
-func (r *CRUDRepository[M, F]) Update(id uint, item M) (*M, error) {
+func (r *Repository[M, F]) Update(id uint, item M) (*M, error) {
 	var updatedItem M
 	if err := r.db.Where("id = ?", id).Updates(&item).Scan(&updatedItem).Error; err != nil {
 		return nil, err
@@ -61,24 +59,24 @@ func (r *CRUDRepository[M, F]) Update(id uint, item M) (*M, error) {
 	return &updatedItem, nil
 }
 
-func (r *CRUDRepository[M, F]) Get(id uint) (item *M, err error) {
+func (r *Repository[M, F]) Get(id uint) (item *M, err error) {
 	err = r.db.First(&item, id).Error
 	return
 }
 
-func (r *CRUDRepository[M, F]) Delete(id uint) (err error) {
+func (r *Repository[M, F]) Delete(id uint) (err error) {
 	var item M
 	err = r.db.Delete(&item, id).Error
 	return
 }
 
-func (r *CRUDRepository[M, F]) Paginate(offset, limit int) func(db *gorm.DB) *gorm.DB {
+func (r *Repository[M, F]) Paginate(offset, limit int) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		return db.Offset(offset).Limit(limit)
 	}
 }
 
-func (r *CRUDRepository[M, F]) GetMany(filter F) (items []M, err error) {
+func (r *Repository[M, F]) GetMany(filter F) (items []M, err error) {
 	err = r.getListQuery(filter).
 		Scopes(r.Paginate(filter.GetOffset(), filter.GetLimit())).
 		Find(&items).
@@ -86,12 +84,12 @@ func (r *CRUDRepository[M, F]) GetMany(filter F) (items []M, err error) {
 	return
 }
 
-func (r *CRUDRepository[M, F]) GetTotal(filter F) (count int64, err error) {
+func (r *Repository[M, F]) GetTotal(filter F) (count int64, err error) {
 	err = r.getListQuery(filter).Count(&count).Error
 	return
 }
 
-func (r *CRUDRepository[M, F]) getListQuery(filter F) *gorm.DB {
+func (r *Repository[M, F]) getListQuery(filter F) *gorm.DB {
 	var item M
 	tx := r.GetDB().Model(&item)
 

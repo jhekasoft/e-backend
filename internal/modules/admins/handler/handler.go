@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"e-backend/internal/crud"
 	"e-backend/internal/modules/admins/models"
 	"errors"
 	"net/http"
@@ -8,9 +9,6 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
-
-	im "e-backend/internal/models"
-	ir "e-backend/internal/repository"
 )
 
 type (
@@ -18,7 +16,7 @@ type (
 		service AdminService
 	}
 
-	AdminService im.CRUDService[models.Admin, models.AdminListFilter]
+	AdminService crud.CRUDService[models.Admin, models.AdminListFilter]
 
 	AdminListFilter struct {
 		Offset int               `query:"Offset"`
@@ -92,7 +90,7 @@ func (h *Handler) GetList(c echo.Context) error {
 	}
 
 	filter := models.AdminListFilter{
-		ListFilter: ir.ListFilter{
+		ListFilter: crud.ListFilter{
 			Offset: req.Offset,
 			Limit:  req.Limit,
 		},
