@@ -3,7 +3,7 @@ package internal
 import (
 	internalHttp "e-backend/internal/http"
 	"e-backend/internal/models"
-	"e-backend/internal/modules"
+	"e-backend/modules"
 	"fmt"
 	"log"
 	"net/http"

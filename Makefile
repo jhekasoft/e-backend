@@ -15,17 +15,17 @@ build:
 doc:
 	$(info ************ BUILDING DOC ************)
 	# Update doc's version
-	sed -i "s/\(version:\) .*/\1 $(VERSION)/" ./internal/modules/doc/data/public/restapi/openapi/openapi.yml
+	sed -i "s/\(version:\) .*/\1 $(VERSION)/" ./modules/doc/data/public/restapi/openapi/openapi.yml
 
 data:
 	$(info ************ BUILDING DATA FILES ************)
 	# Module CV
-	mkdir -p ./build/internal/modules/cv/data
-	cp -r ./internal/modules/cv/data/* ./build/internal/modules/cv/data
+	mkdir -p ./build/modules/cv/data
+	cp -r ./modules/cv/data/* ./build/modules/cv/data
 
 	# Module Doc
-	mkdir -p ./build/internal/modules/doc/data
-	cp -r ./internal/modules/doc/data/* ./build/internal/modules/doc/data
+	mkdir -p ./build/modules/doc/data
+	cp -r ./modules/doc/data/* ./build/modules/doc/data
 
 clean:
 	$(info ************ CLEANING ************)
