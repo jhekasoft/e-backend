@@ -3,93 +3,25 @@ package handler
 import (
 	"e-backend/internal/crud"
 	"e-backend/modules/admins/models"
-	"errors"
-	"net/http"
-	"strconv"
-
-	"github.com/labstack/echo/v4"
-	"gorm.io/gorm"
 )
 
-type (
-	Handler struct {
-		service AdminService
-	}
-
-	AdminService crud.CRUDService[models.Admin, models.AdminListFilter]
-
-	AdminListFilter struct {
-		Offset int               `query:"Offset"`
-		Limit  int               `query:"Limit"`
-		Role   *models.AdminRole `query:"Role"`
-		Search string            `query:"Search"`
-	}
-
-	CreateAdminRequest struct {
-		Username string `validate:"required"`
-		Name     string
-		Role     models.AdminRole `validate:"required"`
-		Password string           `validate:"required,gte=6"`
-	}
-
-	UpdateAdminRequest struct {
-		Name string           `validate:"required"`
-		Role models.AdminRole `validate:"required"`
-	}
-
-	GetAdminResponse struct {
-		Data models.Admin
-	}
-
-	CreateAdminResponse GetAdminResponse
-
-	UpdateAdminResponse GetAdminResponse
-
-	AdminListResponse struct {
-		Data   []models.Admin
-		Offset int
-		Limit  int
-		Total  int64
-	}
-)
-
-func NewHandler(service AdminService) *Handler {
-	return &Handler{service}
+type Handler struct {
+	crud.Handler[models.Admin, models.AdminListFilter, CreateAdminRequest, UpdateAdminRequest, AdminListFilter]
 }
 
-func (h *Handler) CreateItem(c echo.Context) error {
-	req := new(CreateAdminRequest)
-	err := c.Bind(req)
-	if err != nil {
-		return err
-	}
-	if err = c.Validate(req); err != nil {
-		return err
-	}
-
-	item := models.Admin{
-		Username: req.Username,
-		Name:     req.Name,
-		Role:     req.Role,
-		Password: req.Password, // TODO: add hashing
-	}
-	createdItem, err := h.service.Create(item)
-	if err != nil {
-		return err
-	}
-
-	resp := CreateAdminResponse{Data: *createdItem}
-	return c.JSON(http.StatusOK, resp)
+func NewHandler(service crud.CRUDService[models.Admin, models.AdminListFilter]) *Handler {
+	return &Handler{*crud.NewHandler[models.Admin, models.AdminListFilter, CreateAdminRequest, UpdateAdminRequest, AdminListFilter](service)}
 }
 
-func (h *Handler) GetList(c echo.Context) error {
-	req := new(AdminListFilter)
-	err := c.Bind(req)
-	if err != nil {
-		return err
-	}
+type AdminListFilter struct {
+	Offset int               `query:"Offset"`
+	Limit  int               `query:"Limit"`
+	Role   *models.AdminRole `query:"Role"`
+	Search string            `query:"Search"`
+}
 
-	filter := models.AdminListFilter{
+func (req AdminListFilter) ToFilter() models.AdminListFilter {
+	return models.AdminListFilter{
 		ListFilter: crud.ListFilter{
 			Offset: req.Offset,
 			Limit:  req.Limit,
@@ -97,86 +29,32 @@ func (h *Handler) GetList(c echo.Context) error {
 		Role:   req.Role,
 		Search: req.Search,
 	}
-
-	list, total, err := h.service.GetManyWithTotal(filter)
-	if err != nil {
-		return err
-	}
-
-	resp := AdminListResponse{
-		Data:   list,
-		Offset: filter.Offset,
-		Limit:  filter.Limit,
-		Total:  total,
-	}
-	return c.JSON(http.StatusOK, resp)
 }
 
-func (h *Handler) GetItem(c echo.Context) error {
-	// Get ID parameter
-	idParam := c.Param("id")
-	id, err := strconv.ParseUint(idParam, 10, 32)
-	if err != nil {
-		return err
-	}
-
-	item, err := h.service.Get(uint(id))
-	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return echo.NewHTTPError(http.StatusNotFound, "not found")
-	}
-	if err != nil {
-		return err
-	}
-
-	resp := GetAdminResponse{Data: *item}
-
-	return c.JSON(http.StatusOK, resp)
+type CreateAdminRequest struct {
+	Username string `validate:"required"`
+	Name     string
+	Role     models.AdminRole `validate:"required"`
+	Password string           `validate:"required,gte=6"`
 }
 
-func (h *Handler) UpdateItem(c echo.Context) error {
-	// Get ID parameter
-	idParam := c.Param("id")
-	id, err := strconv.ParseUint(idParam, 10, 32)
-	if err != nil {
-		return err
+func (req CreateAdminRequest) ToModel() models.Admin {
+	return models.Admin{
+		Username: req.Username,
+		Name:     req.Name,
+		Role:     req.Role,
+		Password: req.Password,
 	}
+}
 
-	req := new(UpdateAdminRequest)
-	err = c.Bind(req)
-	if err != nil {
-		return err
-	}
-	if err = c.Validate(req); err != nil {
-		return err
-	}
+type UpdateAdminRequest struct {
+	Name string           `validate:"required"`
+	Role models.AdminRole `validate:"required"`
+}
 
-	item := models.Admin{
+func (req UpdateAdminRequest) ToModel() models.Admin {
+	return models.Admin{
 		Name: req.Name,
 		Role: req.Role,
 	}
-
-	updatedItem, err := h.service.Update(uint(id), item)
-	if err != nil {
-		return err
-	}
-
-	resp := UpdateAdminResponse{Data: *updatedItem}
-
-	return c.JSON(http.StatusOK, resp)
-}
-
-func (h *Handler) DeleteItem(c echo.Context) error {
-	// Get ID parameter
-	idParam := c.Param("id")
-	id, err := strconv.ParseUint(idParam, 10, 32)
-	if err != nil {
-		return err
-	}
-
-	err = h.service.Delete(uint(id))
-	if err != nil {
-		return err
-	}
-
-	return c.NoContent(http.StatusNoContent)
 }

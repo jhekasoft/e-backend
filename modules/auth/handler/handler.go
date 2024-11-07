@@ -62,7 +62,7 @@ func (h *Handler) CreateItem(c echo.Context) error {
 		Username: req.Username,
 		Email:    req.Email,
 		Name:     req.Name,
-		Password: req.Password, // TODO: add hashing
+		Password: req.Password,
 	}
 	createdItem, token, err := h.service.Create(item)
 	if err != nil {

@@ -29,3 +29,15 @@ type CRUDService[M CRUDModel, F any] interface {
 	GetManyWithTotal(filter F) (items []M, total int64, err error)
 	Delete(id uint) (err error)
 }
+
+type CRUDCreateRequest[M CRUDModel] interface {
+	ToModel() M
+}
+
+type CRUDUpdateRequest[M CRUDModel] interface {
+	ToModel() M
+}
+
+type CRUDListFilterRequest[F CRUDListFilter] interface {
+	ToFilter() F
+}

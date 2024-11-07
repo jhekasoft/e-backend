@@ -20,7 +20,11 @@ func NewRepository(db *gorm.DB) *Repository {
 func listScope(filter models.AdminListFilter) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		if len(filter.Search) > 0 {
-			db.Where("name ILIKE ?", "%"+filter.Search+"%")
+			db.Where(
+				db.Session(&gorm.Session{}).Unscoped().
+					Where("name ILIKE ?", "%"+filter.Search+"%").
+					Or("username ILIKE ?", "%"+filter.Search+"%"),
+			)
 		}
 		if filter.Role != nil {
 			db.Where("role = ?", filter.Role)

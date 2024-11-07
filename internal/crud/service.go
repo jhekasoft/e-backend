@@ -1,10 +1,10 @@
 package crud
 
-type Service[M CRUDModel, F any] struct {
+type Service[M CRUDModel, F CRUDListFilter] struct {
 	repo CRUDRepository[M, F]
 }
 
-func NewService[M CRUDModel, F any](repo CRUDRepository[M, F]) *Service[M, F] {
+func NewService[M CRUDModel, F CRUDListFilter](repo CRUDRepository[M, F]) *Service[M, F] {
 	return &Service[M, F]{repo}
 }
 
