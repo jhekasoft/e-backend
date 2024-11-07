@@ -7,9 +7,9 @@ import (
 )
 
 type Service struct {
-	is.ServiceGeneric[models.Admin, models.AdminListFilter]
+	is.CRUDService[models.Admin, models.AdminListFilter]
 }
 
-func NewService(repo im.Repository[models.Admin, models.AdminListFilter]) *Service {
+func NewService(repo im.CRUDRepository[models.Admin, models.AdminListFilter]) *Service {
 	return &Service{*is.NewService(repo)}
 }

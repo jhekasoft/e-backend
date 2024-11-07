@@ -2,11 +2,16 @@ package models
 
 import "gorm.io/gorm"
 
-type Model interface {
+type CRUDModel interface {
 	GetID() uint
 }
 
-type Repository[M Model, F any] interface {
+type CRUDListFilter interface {
+	GetOffset() int
+	GetLimit() int
+}
+
+type CRUDRepository[M CRUDModel, F any] interface {
 	GetDB() *gorm.DB
 	Create(item M) (createdItem *M, err error)
 	Update(id uint, item M) (*M, error)
@@ -16,8 +21,8 @@ type Repository[M Model, F any] interface {
 	Delete(id uint) (err error)
 }
 
-type Service[M Model, F any] interface {
-	GetRepo() Repository[M, F]
+type CRUDService[M CRUDModel, F any] interface {
+	GetRepo() CRUDRepository[M, F]
 	Create(item M) (createdItem *M, err error)
 	Update(id uint, item M) (*M, error)
 	Get(id uint) (item *M, err error)

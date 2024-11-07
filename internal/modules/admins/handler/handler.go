@@ -10,6 +10,7 @@ import (
 	"gorm.io/gorm"
 
 	im "e-backend/internal/models"
+	ir "e-backend/internal/repository"
 )
 
 type (
@@ -17,7 +18,7 @@ type (
 		service AdminService
 	}
 
-	AdminService im.Service[models.Admin, models.AdminListFilter]
+	AdminService im.CRUDService[models.Admin, models.AdminListFilter]
 
 	AdminListFilter struct {
 		Offset int               `query:"Offset"`
@@ -91,8 +92,10 @@ func (h *Handler) GetList(c echo.Context) error {
 	}
 
 	filter := models.AdminListFilter{
-		Offset: req.Offset,
-		Limit:  req.Limit,
+		ListFilter: ir.ListFilter{
+			Offset: req.Offset,
+			Limit:  req.Limit,
+		},
 		Role:   req.Role,
 		Search: req.Search,
 	}
@@ -104,8 +107,8 @@ func (h *Handler) GetList(c echo.Context) error {
 
 	resp := AdminListResponse{
 		Data:   list,
-		Offset: req.Offset,
-		Limit:  req.Limit,
+		Offset: filter.Offset,
+		Limit:  filter.Limit,
 		Total:  total,
 	}
 	return c.JSON(http.StatusOK, resp)

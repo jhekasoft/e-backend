@@ -1,6 +1,8 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	ir "e-backend/internal/repository"
+)
 
 // AdminRole is role of the administrator.
 type AdminRole string
@@ -11,20 +13,15 @@ const (
 )
 
 type Admin struct {
-	gorm.Model
+	ir.CRUDModel
 	Username string    `gorm:"uniqueIndex"`
 	Name     string    `gorm:"index"`
 	Role     AdminRole `gorm:"index"`
 	Password string    `json:"-"`
 }
 
-func (m Admin) GetID() uint {
-	return m.ID
-}
-
 type AdminListFilter struct {
-	Offset int
-	Limit  int
+	ir.ListFilter
 	Role   *AdminRole
 	Search string
 }
