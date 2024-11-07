@@ -26,11 +26,23 @@ type (
 	}
 )
 
-type Handler[M CRUDModel, F CRUDListFilter, CR CRUDCreateRequest[M], UR CRUDUpdateRequest[M], LFR CRUDListFilterRequest[F]] struct {
+type Handler[
+	M CRUDModel,
+	F CRUDListFilter,
+	CR CRUDCreateRequest[M],
+	UR CRUDUpdateRequest[M],
+	LFR CRUDListFilterRequest[F],
+] struct {
 	service CRUDService[M, F]
 }
 
-func NewHandler[M CRUDModel, F CRUDListFilter, CR CRUDCreateRequest[M], UR CRUDUpdateRequest[M], LFR CRUDListFilterRequest[F]](service CRUDService[M, F]) *Handler[M, F, CR, UR, LFR] {
+func NewHandler[
+	M CRUDModel,
+	F CRUDListFilter,
+	CR CRUDCreateRequest[M],
+	UR CRUDUpdateRequest[M],
+	LFR CRUDListFilterRequest[F],
+](service CRUDService[M, F]) *Handler[M, F, CR, UR, LFR] {
 	return &Handler[M, F, CR, UR, LFR]{service}
 }
 
@@ -39,7 +51,6 @@ func (h *Handler[M, F, CR, UR, LFR]) GetService() CRUDService[M, F] {
 }
 
 func (h *Handler[M, F, CR, UR, LFR]) CreateItem(c echo.Context) error {
-	// req := new(CR)
 	var req CR
 	err := c.Bind(&req)
 	if err != nil {

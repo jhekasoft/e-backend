@@ -33,7 +33,11 @@ type Repository[M CRUDModel, F CRUDListFilter] struct {
 	listOrder any
 }
 
-func NewRepository[M CRUDModel, F CRUDListFilter](db *gorm.DB, listScope *ListScopeFunc[F], listOrder any) *Repository[M, F] {
+func NewRepository[M CRUDModel, F CRUDListFilter](
+	db *gorm.DB,
+	listScope *ListScopeFunc[F],
+	listOrder any,
+) *Repository[M, F] {
 	return &Repository[M, F]{db, listScope, listOrder}
 }
 

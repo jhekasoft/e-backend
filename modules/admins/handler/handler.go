@@ -6,11 +6,25 @@ import (
 )
 
 type Handler struct {
-	crud.Handler[models.Admin, models.AdminListFilter, CreateAdminRequest, UpdateAdminRequest, AdminListFilter]
+	crud.Handler[
+		models.Admin,
+		models.AdminListFilter,
+		CreateAdminRequest,
+		UpdateAdminRequest,
+		AdminListFilter,
+	]
 }
 
 func NewHandler(service crud.CRUDService[models.Admin, models.AdminListFilter]) *Handler {
-	return &Handler{*crud.NewHandler[models.Admin, models.AdminListFilter, CreateAdminRequest, UpdateAdminRequest, AdminListFilter](service)}
+	return &Handler{
+		*crud.NewHandler[
+			models.Admin,
+			models.AdminListFilter,
+			CreateAdminRequest,
+			UpdateAdminRequest,
+			AdminListFilter,
+		](service),
+	}
 }
 
 type AdminListFilter struct {

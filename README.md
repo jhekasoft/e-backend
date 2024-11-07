@@ -18,7 +18,7 @@ And then edit `.e-backend` file.
 ## Run HTTP-server
 
 ```bash
-go run -tags=all main.go serve
+make run
 ```
 
 ## Building
