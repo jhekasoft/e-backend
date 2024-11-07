@@ -4,7 +4,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Documentation</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+  <link rel="manifest" href="./site.webmanifest">
+  <title>e-backend documentation</title>
   <style>
     html * {
       font-family: Helvetica;
@@ -12,21 +16,37 @@
     body {
       background-color: #2A2B2C;
       color: #bbb;
+      padding: 10px;
     }
     a {
       color: #24a49d;
+    }
+    .brand {
+      display: flex;
+    }
+    .brand-logo {
+      width: 124px;
+      margin-right: 10px;
+    }
+    .brand-title {
+      color: #24a49d;
+      text-shadow: rgba(36,164,157,0.9) 0px 0px 39px;
     }
   </style>
 </head>
 
 <body>
-  <h2>Documentation</h2>
-  <pre style="font-family:monospace">
-    ▗▄▄▄▖▗▄▄▖  ▗▄▖  ▗▄▄▖▗▖ ▗▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄ 
-    ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌   ▐▌▗▞▘▐▌   ▐▛▚▖▐▌▐▌  █
-    ▐▛▀▀▘▐▛▀▚▖▐▛▀▜▌▐▌   ▐▛▚▖ ▐▛▀▀▘▐▌ ▝▜▌▐▌  █
-    ▐▙▄▄▖▐▙▄▞▘▐▌ ▐▌▝▚▄▄▖▐▌ ▐▌▐▙▄▄▖▐▌  ▐▌▐▙▄▄▀
-  </pre>
+  <div class="brand">
+    <img class="brand-logo" src="./android-chrome-512x512.png" alt="e-backend" />
+    <div class="brand-title">
+      <pre style="font-family:monospace">
+▗▄▄▄▖▗▄▄▖  ▗▄▖  ▗▄▄▖▗▖ ▗▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄ 
+▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌   ▐▌▗▞▘▐▌   ▐▛▚▖▐▌▐▌  █
+▐▛▀▀▘▐▛▀▚▖▐▛▀▜▌▐▌   ▐▛▚▖ ▐▛▀▀▘▐▌ ▝▜▌▐▌  █
+▐▙▄▄▖▐▙▄▞▘▐▌ ▐▌▝▚▄▄▖▐▌ ▐▌▐▙▄▄▖▐▌  ▐▌▐▙▄▄▀
+      </pre>
+    </div>
+  </div>
   <ul>
     <li><a href="/doc/restapi/">REST API</a></li>
     <!-- <li><a href="#">Async API</a></li> -->

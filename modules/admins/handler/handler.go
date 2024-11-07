@@ -29,7 +29,7 @@ type (
 		Username string `validate:"required"`
 		Name     string
 		Role     models.AdminRole `validate:"required"`
-		Password string           `validate:"required"`
+		Password string           `validate:"required,gte=6"`
 	}
 
 	UpdateAdminRequest struct {
