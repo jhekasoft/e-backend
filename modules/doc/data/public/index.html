@@ -26,11 +26,25 @@
     }
     .brand-logo {
       width: 124px;
+      height: 124px;
       margin-right: 10px;
     }
     .brand-title {
       color: #24a49d;
       text-shadow: rgba(36,164,157,0.9) 0px 0px 39px;
+    }
+    .brand-title pre {
+      margin: 0;
+      font-family: monospace;
+    }
+    .doc-links {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+    }
+    .doc-links li {
+      padding-right: 10px;
     }
   </style>
 </head>
@@ -39,18 +53,18 @@
   <div class="brand">
     <img class="brand-logo" src="./android-chrome-512x512.png" alt="e-backend" />
     <div class="brand-title">
-      <pre style="font-family:monospace">
+      <pre>
 ▗▄▄▄▖▗▄▄▖  ▗▄▖  ▗▄▄▖▗▖ ▗▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄ 
 ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌   ▐▌▗▞▘▐▌   ▐▛▚▖▐▌▐▌  █
 ▐▛▀▀▘▐▛▀▚▖▐▛▀▜▌▐▌   ▐▛▚▖ ▐▛▀▀▘▐▌ ▝▜▌▐▌  █
 ▐▙▄▄▖▐▙▄▞▘▐▌ ▐▌▝▚▄▄▖▐▌ ▐▌▐▙▄▄▖▐▌  ▐▌▐▙▄▄▀
       </pre>
+      <ul class="doc-links">
+        <li><a href="/doc/restapi/">REST API</a></li>
+        <li><a href="#"><s>Async API</s></a></li>
+      </ul>
     </div>
   </div>
-  <ul>
-    <li><a href="/doc/restapi/">REST API</a></li>
-    <!-- <li><a href="#">Async API</a></li> -->
-  </ul>
 </body>
 
 </html>
