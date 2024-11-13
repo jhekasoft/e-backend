@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 
+	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"gorm.io/driver/postgres"
@@ -55,33 +56,52 @@ func (a *HTTPApp) Run() {
 	a.Core.Version = Version
 	a.Core.BuildTime = BuildTime
 
+	config := a.Core.Config
+
 	// Connect to the database
 	dbLogLevel := logger.Error
-	if a.Core.Config.IsDevelop() {
+	if config.IsDevelop() {
 		dbLogLevel = logger.Info
 	}
-
-	db, err := gorm.Open(postgres.Open(a.Core.Config.DB.DSN), &gorm.Config{
+	db, err := gorm.Open(postgres.Open(config.DB.DSN), &gorm.Config{
 		TranslateError: true,
 		Logger:         logger.Default.LogMode(dbLogLevel),
 	})
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalf("Database connection error: %v\n", err)
 	}
 	a.Core.DB = db
 
-	// Prepare HTTP-server
-	a.Core.Echo = echo.New()
-	a.Core.Echo.HideBanner = true
-	a.Core.Echo.HTTPErrorHandler = a.httpErrorHandler
-
+	// Prepare translator
 	uk := uk.New()
 	uni := ut.New(uk, uk)
 	trans, _ := uni.GetTranslator("uk")
 	validate := validator.New(validator.WithRequiredStructEnabled())
 	uk_translations.RegisterDefaultTranslations(validate, trans)
-
 	a.Core.Trans = &trans
+
+	// Prepare MQTT
+	var mqttConnectHandler mqtt.OnConnectHandler = func(client mqtt.Client) {
+		fmt.Println("MQTT connected")
+	}
+	var mqttConnectLostHandler mqtt.ConnectionLostHandler = func(client mqtt.Client, err error) {
+		fmt.Printf("MQTT connection lost: %v", err)
+	}
+	mqttOpts := mqtt.NewClientOptions()
+	mqttOpts.AddBroker(fmt.Sprintf("tcp://%s:%d", config.MQTT.Host, config.MQTT.Port))
+	mqttOpts.SetClientID("e-backend_client")
+	mqttOpts.OnConnect = mqttConnectHandler
+	mqttOpts.OnConnectionLost = mqttConnectLostHandler
+	mqttClient := mqtt.NewClient(mqttOpts)
+	if mqttToken := mqttClient.Connect(); mqttToken.Wait() && mqttToken.Error() != nil {
+		log.Fatalf("MQTT init error: %v\n", mqttToken.Error())
+	}
+	a.Core.MQTT = mqttClient
+
+	// Prepare HTTP-server
+	a.Core.Echo = echo.New()
+	a.Core.Echo.HideBanner = true
+	a.Core.Echo.HTTPErrorHandler = a.httpErrorHandler
 
 	a.Core.Echo.Validator = &CustomValidator{
 		validator: validate,
@@ -103,12 +123,12 @@ func (a *HTTPApp) Run() {
 		fmt.Printf("Run module %s\n", m.Name())
 		err := m.Run(&a.Core)
 		if err != nil {
-			log.Println(err)
+			log.Fatalf("Module run error: %v\n", err)
 		}
 	}
 
 	// Run HTTP-server
-	a.Core.Echo.Logger.Fatal(a.Core.Echo.Start(fmt.Sprintf(":%d", a.Core.Config.HTTP.Port)))
+	a.Core.Echo.Logger.Fatal(a.Core.Echo.Start(fmt.Sprintf(":%d", config.HTTP.Port)))
 }
 
 func (a *HTTPApp) httpErrorHandler(err error, c echo.Context) {

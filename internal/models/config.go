@@ -10,6 +10,7 @@ const (
 type Config struct {
 	Mode AppMode
 	DB   ConfigDB
+	MQTT ConfigMQTT
 	HTTP ConfigHTTP
 	Auth ConfigAuth
 }
@@ -20,6 +21,11 @@ func (c *Config) IsDevelop() bool {
 
 type ConfigDB struct {
 	DSN string
+}
+
+type ConfigMQTT struct {
+	Port uint16
+	Host string
 }
 
 type ConfigHTTP struct {
