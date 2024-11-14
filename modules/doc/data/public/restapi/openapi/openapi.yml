@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
   title: e-backend
-  description: e-backend REST API | [Documentation](/doc)
-  version: 0.0.2
+  description: e-backend REST API 😼 | [Documentation](/doc)
+  version: 0.0.3
 tags:
   - name: Health
     description: Health API

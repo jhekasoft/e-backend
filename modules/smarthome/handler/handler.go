@@ -13,11 +13,11 @@ import (
 
 const SensorMeteo = "meteo"
 
-type SensorValueRequest struct {
-	Temperature *float32 `json:"temperature"`
-	Humidity    *float32 `json:"humidity"`
-	Pressure    *float32 `json:"pressure"`
-}
+// type SensorValueRequest struct {
+// 	Temperature *float32 `json:"temperature"`
+// 	Humidity    *float32 `json:"humidity"`
+// 	Pressure    *float32 `json:"pressure"`
+// }
 
 type Handler struct {
 	service *service.Service

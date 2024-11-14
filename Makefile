@@ -14,8 +14,11 @@ build:
 
 doc:
 	$(info ************ BUILDING DOC ************)
-	# Update doc's version
+	# Update REST doc's version
 	sed -i "s/\(version:\) .*/\1 $(VERSION)/" ./modules/doc/data/public/restapi/openapi/openapi.yml
+
+	# Update MQTT doc's version
+	sed -i "s/\(version:\) .*/\1 $(VERSION)/" ./modules/doc/data/public/mqttapi/asyncapi/asyncapi.yml
 
 data:
 	$(info ************ BUILDING DATA FILES ************)
