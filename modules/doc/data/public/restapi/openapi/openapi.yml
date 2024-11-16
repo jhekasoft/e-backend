@@ -8,15 +8,28 @@ tags:
     description: Health API
   - name: Auth
     description: Authorization API
+  - name: CV
+    description: Data for Curriculum vitæ (résumé)
 paths:
   /health:
     $ref: "health/health.yml"
+
   /auth/users:
     $ref: "auth/users.yml"
   /auth/signin:
     $ref: "auth/signin.yml"
   /auth/users/me:
     $ref: "auth/users-me.yml"
+
+  /admins:
+    $ref: "admins/admins.yml"
+  /admins/{id}:
+    $ref: "admins/admins-id.yml"
+
+  /cv/developer-timeline:
+    $ref: "cv/developer-timeline.yml"
+  /cv/cv:
+    $ref: "cv/cv.yml"
 components:
   securitySchemes:
     BearerAuth:
@@ -29,3 +42,29 @@ components:
         Message:
           type: string
           example: "missing or malformed jwt"
+    NotFoundResponse:
+      type: object
+      properties:
+        Message:
+          type: string
+          example: "not found"
+    Model:
+      type: object
+      properties:
+        ID:
+          type: integer
+          format: uint32
+          example: 1
+        CreatedAt:
+          type: string
+          format: date-time
+          example: "2023-01-01T00:00:00Z"
+        UpdatedAt:
+          type: string
+          format: date-time
+          example: "2023-01-01T00:00:00Z"
+        DeletedAt:
+          type: string
+          format: date-time
+          nullable: true
+          example: "2023-01-01T00:00:00Z"

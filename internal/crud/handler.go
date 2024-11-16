@@ -79,7 +79,7 @@ func (h *Handler[M, F, CR, UR, LFR]) UpdateItem(c echo.Context) error {
 	}
 
 	var req UR
-	err = c.Bind(req)
+	err = c.Bind(&req)
 	if err != nil {
 		return err
 	}

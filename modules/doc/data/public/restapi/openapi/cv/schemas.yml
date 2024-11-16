@@ -1,0 +1,140 @@
+schemas:
+  DevTimelineItem:
+    type: object
+    properties:
+      year:
+        type: integer
+        format: uint32
+        example: 2003
+      desc:
+        type: array
+        items:
+          type: string
+        example: ["**Sinclair BASIC**, ZX Spectrum", "Contributed to open-source"]
+  CVCommon:
+    type: object
+    properties:
+      name:
+        type: string
+        example: "John Doe"
+      yearOfBirth:
+        type: integer
+        format: uint32
+        example: 1990
+      githubUrl:
+        type: string
+        format: uri
+        example: "https://github.com/johndoe"
+      linkedInUrl:
+        type: string
+        format: uri
+        example: "https://linkedin.com/in/johndoe"
+      telegram:
+        type: string
+        example: "johndoe"
+      email:
+        type: string
+        format: email
+        example: "johndoe@example.com"
+
+  CVEducationItem:
+    type: object
+    properties:
+      startYear:
+        type: integer
+        format: uint32
+        example: 2008
+      endYear:
+        type: integer
+        format: uint32
+        example: 2012
+      school:
+        type: string
+        example: "University of Example"
+      degree:
+        type: string
+        example: "Bachelor's Degree"
+      fieldOfStudy:
+        type: string
+        example: "Computer Science"
+      location:
+        type: string
+        example: "Example City"
+      desc:
+        type: string
+        nullable: true
+        example: "Graduated with honors"
+
+  CVExperienceItem:
+    type: object
+    properties:
+      startYear:
+        type: integer
+        format: uint32
+        example: 2015
+      endYear:
+        type: integer
+        format: uint32
+        example: 2020
+      title:
+        type: string
+        example: "Software Engineer"
+      company:
+        type: string
+        example: "Tech Corp"
+      companyUrl:
+        type: string
+        format: uri
+        nullable: true
+        example: "https://techcorp.com"
+      location:
+        type: string
+        example: "Example City"
+      desc:
+        type: string
+        nullable: true
+        example: "Developed and maintained web applications"
+
+  CVPublication:
+    type: object
+    properties:
+      year:
+        type: integer
+        format: uint32
+        example: 2019
+      title:
+        type: string
+        example: "Research on Distributed Systems"
+      url:
+        type: string
+        format: uri
+        example: "https://example.com/research"
+      desc:
+        type: string
+        example: "This paper discusses..."
+      imageUrl:
+        type: string
+        format: uri
+        example: "/public/publications/image.jpg"
+
+  CVSoftwareProject:
+    type: object
+    properties:
+      year:
+        type: integer
+        format: uint32
+        example: 2021
+      title:
+        type: string
+        example: "Open-Source Project"
+      url:
+        type: string
+        format: uri
+        example: "https://github.com/project"
+      desc:
+        type: string
+        example: "An open-source project for..."
+      imageUrl:
+        type: string
+        format: uri
+        example: "/public/software-projects/image.jpg"

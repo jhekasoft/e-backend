@@ -1,0 +1,68 @@
+schemas:
+  AdminRole:
+    type: string
+    enum:
+      - super
+      - default
+    example: "super"
+
+  Admin:
+    allOf:
+      - $ref: '../openapi.yml#/components/schemas/Model'
+      - type: object
+        properties:
+          Username:
+            type: string
+            example: "adminuser"
+          Name:
+            type: string
+            example: "Admin User"
+          Role:
+            $ref: '#/schemas/AdminRole'
+
+  AdminListFilter:
+    type: object
+    properties:
+      offset:
+        type: integer
+        example: 0
+      limit:
+        type: integer
+        example: 10
+      role:
+        $ref: '#/schemas/AdminRole'
+      search:
+        type: string
+        example: "Admin User"
+
+  CreateAdminRequest:
+    type: object
+    required:
+      - username
+      - role
+      - password
+    properties:
+      Username:
+        type: string
+        example: "newadmin"
+      Name:
+        type: string
+        example: "New Admin"
+      Role:
+        $ref: '#/schemas/AdminRole'
+      Password:
+        type: string
+        minLength: 6
+        example: "securepassword"
+
+  UpdateAdminRequest:
+    type: object
+    required:
+      - name
+      - role
+    properties:
+      Name:
+        type: string
+        example: "Updated Admin"
+      Role:
+        $ref: '#/schemas/AdminRole'

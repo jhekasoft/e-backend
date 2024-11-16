@@ -1,0 +1,33 @@
+get:
+  tags:
+    - CV
+  summary: CV
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  common:
+                      $ref: "./schemas.yml#/schemas/CVCommon"
+                  education:
+                    type: array
+                    items:
+                      $ref: "./schemas.yml#/schemas/CVEducationItem"
+                  experience:
+                    type: array
+                    items:
+                      $ref: "./schemas.yml#/schemas/CVExperienceItem"
+                  publications:
+                    type: array
+                    items:
+                      $ref: "./schemas.yml#/schemas/CVPublication"
+                  softwareProjects:
+                    type: array
+                    items:
+                      $ref: "./schemas.yml#/schemas/CVSoftwareProject"
