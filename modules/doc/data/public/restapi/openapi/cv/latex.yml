@@ -1,0 +1,12 @@
+get:
+  tags:
+    - CV
+  summary: CV in LaTeX format
+  responses:
+    200:
+      description: Success
+      content:
+        application/x-latex:
+          schema:
+            type: string
+            example: "\\documentclass{article} ..."

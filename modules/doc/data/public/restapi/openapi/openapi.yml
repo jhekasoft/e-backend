@@ -30,6 +30,8 @@ paths:
     $ref: "cv/developer-timeline.yml"
   /cv/cv:
     $ref: "cv/cv.yml"
+  /cv/latex:
+    $ref: "cv/latex.yml"
 components:
   securitySchemes:
     BearerAuth:

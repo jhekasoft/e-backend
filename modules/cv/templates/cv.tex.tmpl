@@ -1,0 +1,95 @@
+\documentclass[11pt,a4paper]{moderncv}
+% moderncv themes
+%\moderncvtheme[green]{casual}                 % optional argument are 'blue' (default), 'orange', 'red', 'green', 'grey' and 'roman' (for roman fonts, instead of sans serif fonts)
+%\moderncvtheme[green]{classic}                % idem
+%\moderncvtheme[blue]{casual}
+
+\moderncvtheme[blue]{classic}
+% character encoding
+\usepackage[utf8]{inputenc}                   % replace by the encoding you are using
+% adjust the page margins
+\usepackage[scale=0.85]{geometry}
+\setlength{\hintscolumnwidth}{4cm}            % if you want to change the width of the column with the dates
+%\AtBeginDocument{\setlength{\maketitlenamewidth}{6cm}}  % only for the classic theme, if you want to change the width of your name placeholder (to leave more space for your address details
+\AtBeginDocument{\recomputelengths}                     % required when changes are made to page layout lengths
+
+% personal data
+\name{Eugene}{Efremov}
+\title{Curriculum Vitae}               % optional, remove the line if not wanted
+\born{7 March 1988}
+\address{Kyiv, Ukraine}{}
+%\address{}{}    % optional, remove the line if not wanted
+%\mobile{mobile (optional)}                    % optional, remove the line if not wanted
+%\phone{phone (optional)}                      % optional, remove the line if not wanted
+%\fax{fax (optional)}                          % optional, remove the line if not wanted
+\email{jhekasoft@gmail.com}                      % optional, remove the line if not wanted
+\homepage{jhekasoft.github.io}
+\social[telegram]{jhekasoft}
+\social[github]{jhekasoft}
+\social[linkedin]{jhekasoft}  
+% \extrainfo{website:~https://jhekasoft.github.io/} % optional, remove the line if not wanted
+\photo[80pt][2pt]{photo.jpg}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 2pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture filefile; optional, remove the line if not wanted
+%\quote{}                 % optional, remove the line if not wanted
+%\nopagenumbers{}                             % uncomment to suppress automatic page numbering for CVs longer than one page
+
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+\maketitle
+
+\section{Experience}
+\subsection{Vocational}
+{{- range .Experience }}
+\cventry{{ "{" }}{{ .StartYear -}}
+{{ if ne .EndYear .StartYear -}}
+--{{- if .EndYear -}}{{ .EndYear }}{{- else }}Present{{ end -}}
+{{ end -}}
+}{{ "{" }}{{ .Title }}}{\newline{}{{ .Company }}}{\newline{}{{ .Location }}}{
+{{- if .Desc }}\newline{}{{ .Desc }}{{ end -}}
+}{}                % arguments 3 to 6 are optional
+{{- end }}
+
+\section{Education}
+{{- range .Education }}
+\cventry{{ "{" }}{{ .StartYear -}}
+{{ if ne .EndYear .StartYear -}}
+--{{- if .EndYear -}}{{ .EndYear }}{{- else }}Present{{ end -}}
+{{ end -}}
+}{{ "{" }}{{ .FieldOfStudy -}}
+}{\newline{}{{ .School -}}
+}{\newline{}{{ .Location -}}
+}{\newline{}\textit{{ "{" }}{{ .Degree -}}}}{}  % arguments 3 to 6 are optional
+{{- end }}
+
+\section{Languages}
+\cvitemwithcomment{English}{Intermediate}{}
+\cvitemwithcomment{Ukrainian}{Native}{}
+\cvitemwithcomment{Russian}{Native}{}
+
+\section{Computer skills}
+\cvline{Actual}{Go, GORM, TypeScript, JavaScript, node.js, NestJS, Next.js, Koa, React, PostgreSQL, SQLite, MySQL, MongoDB, Redis, GNU/Linux, git, MQTT}
+\cvline{Legacy}{Scala, Python, C++, C, Assembler, Lua, PHP, Laravel, Symphony, Zend Framework, CouchDB}
+
+% \renewcommand{\listitemsymbol}{* } % change the symbol for lists
+
+\section{Publications}
+{{- range .Publications }}
+\cvlistitem{{ "{" }}{{ .Title -}}
+{{ if .URL }} \\ {{ .URL }} {{- end }} \\ {{ .Desc }}}
+{{- end }}
+
+\section{Pages and socials}
+\cvline{Homepage}{https://jhekasoft.github.io}
+\cvline{GitHub}{https://github.com/jhekasoft}
+\cvline{LinkedIn}{https://www.linkedin.com/in/jhekasoft}
+\cvline{Telegram}{https://t.me/jhekasoft}  
+
+%\cvlistitem[+]{Item 3}            % optional other symbol
+
+%\section{Extra 2}
+%\cvlistdoubleitem[\Neutral]{Item 1}{Item 4}
+%\cvlistdoubleitem[\Neutral]{Item 2}{Item 5}
+%\cvlistdoubleitem[\Neutral]{Item 3}{}
+
+\end{document}

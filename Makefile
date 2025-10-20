@@ -28,6 +28,8 @@ data:
 	# Module CV
 	mkdir -p ./build/modules/cv/data
 	cp -r ./modules/cv/data/* ./build/modules/cv/data
+	mkdir -p ./build/modules/cv/templates
+	cp -r ./modules/cv/templates/* ./build/modules/cv/templates
 
 	# Module Doc
 	mkdir -p ./build/modules/doc/data

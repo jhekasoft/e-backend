@@ -10,6 +10,7 @@ import (
 
 const CVBaseURL = "/"
 const CVDataPath = "./modules/cv/data"
+const CVTemplatesPath = "./modules/cv/templates"
 
 type CVModule struct {
 }
@@ -20,12 +21,13 @@ func (m *CVModule) Name() string {
 
 func (m *CVModule) Run(c *internalModels.Core) error {
 	repo := repository.NewRepository(CVDataPath)
-	services := service.NewService(repo, CVBaseURL)
+	services := service.NewService(repo, CVBaseURL, CVTemplatesPath)
 	h := handler.NewHandler(services)
 
 	c.Echo.GET("/cv/developer-timeline", h.GetDevTimeline)
 	c.Echo.GET("/cv/cv", h.GetCV)
 	c.Echo.Static("/cv/public", path.Join(CVDataPath, "public"))
+	c.Echo.GET("/cv/latex", h.GetCVLatex)
 
 	return nil
 }

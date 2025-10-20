@@ -93,3 +93,12 @@ func (h *Handler) GetCV(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, resp)
 }
+
+func (h *Handler) GetCVLatex(c echo.Context) error {
+	latexContent, err := h.service.GetCVLatex()
+	if err != nil {
+		return err
+	}
+
+	return c.String(http.StatusOK, latexContent)
+}

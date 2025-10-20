@@ -1,7 +1,7 @@
 - year: 2018
-  title: "GUI with Golang: GTK+ 3 (Russian)"
-  url: https://habr.com/ru/post/420035/
-  desc: "Habr.com. Article about creating application with GTK+ 3 and Golang."
+  title: "GUI with Golang: GTK+ 3"
+  # url: https://habr.com/ru/post/420035/
+  desc: "Article about creating application with GTK+ 3 and Golang."
   imageUrl: public/publications/golang-gtk3.jpg
 
 - year: 2019
