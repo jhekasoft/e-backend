@@ -1,3 +1,6 @@
+//go:build dev
+// +build dev
+
 /*
 Copyright © 2025 Eugene Efremov <jhekasoft@gmail.com>
 
@@ -19,6 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+
 package cmd
 
 import (
@@ -54,6 +58,6 @@ func init() {
 	moduleCmd.AddCommand(moduleCreateCmd)
 
 	moduleCreateCmd.Flags().StringP("template", "t", "simple", `A module template to use.
-Available templates: simple.`,
+Available templates: simple, crud.`,
 	)
 }

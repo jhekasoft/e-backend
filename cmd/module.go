@@ -1,3 +1,6 @@
+//go:build dev
+// +build dev
+
 /*
 Copyright © 2025 Eugene Efremov <jhekasoft@gmail.com>
 

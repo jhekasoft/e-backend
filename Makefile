@@ -5,6 +5,7 @@ BUILD_TIME=$(shell date -Iseconds)
 VERSION=$(shell cat ./VERSION)
 LDFLAGS=-s -w -X 'e-backend/internal.BuildTime=$(BUILD_TIME)' -X 'e-backend/internal.Version=$(VERSION)'
 TAGS=all
+DEV_TAGS=all dev
 
 all: clean build doc data
 
@@ -41,7 +42,7 @@ clean:
 
 run:
 	$(info ************ RUNNING ************)
-	go run -ldflags "$(LDFLAGS)" -tags="$(TAGS)" main.go serve
+	go run -ldflags "$(LDFLAGS)" -tags="$(DEV_TAGS)" main.go serve
 
 test:
 	$(info ************ RUNNING TESTS ************)

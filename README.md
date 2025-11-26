@@ -51,3 +51,12 @@ Run binary:
 ```bash
 ./build/e-backend serve
 ```
+
+## Module generation
+
+```bash
+go run -tags="all dev" main.go module create [name] -t crud
+```
+
+Where `name` is name of module is `lowerCamelCase`, `-t` is template name
+(simple, crud).
