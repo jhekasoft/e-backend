@@ -49,8 +49,12 @@ var moduleCreateCmd = &cobra.Command{
 		fmt.Printf("Creating module '%s' with template '%s'\n", name, template)
 
 		modulesPath := "modules"
-		bp := boilerplate.NewModuleBoilerplate(name, template, modulesPath)
-		cobra.CheckErr(bp.Create())
+		restDocPath := "modules/doc/data/public/restapi/openapi"
+		bp := boilerplate.NewModuleBoilerplate(name, template, modulesPath, restDocPath)
+		result, err := bp.Create()
+		cobra.CheckErr(err)
+
+		fmt.Println(result)
 	},
 }
 

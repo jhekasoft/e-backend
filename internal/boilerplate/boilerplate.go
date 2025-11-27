@@ -14,29 +14,34 @@ import (
 const TemplatesPath = "internal/boilerplate/templates"
 
 type ModuleBoilerplate interface {
-	Create() error
+	Create() (result string, err error)
 }
 
-func NewModuleBoilerplate(name, template, modulesPath string) ModuleBoilerplate {
+func NewModuleBoilerplate(name, template, modulesPath, restDocPath string) ModuleBoilerplate {
 	switch template {
 	case "crud":
-		return &CRUDModuleBoilerplate{CommonModuleBoilerplate{name, modulesPath}}
+		return &CRUDModuleBoilerplate{CommonModuleBoilerplate{name, modulesPath, restDocPath}}
 	default:
-		return &SimpleModuleBoilerplate{CommonModuleBoilerplate{name, modulesPath}}
+		return &SimpleModuleBoilerplate{CommonModuleBoilerplate{name, modulesPath, restDocPath}}
 	}
 }
 
 type CommonModuleBoilerplate struct {
 	Name        string
 	ModulesPath string
+	RESTDocPath string
 }
 
 func (b *CommonModuleBoilerplate) GetModuleTemplatesPath() string {
 	return path.Join(TemplatesPath, "module")
 }
 
-func (b *CommonModuleBoilerplate) GetModulesPath() string {
+func (b *CommonModuleBoilerplate) GetModulePath() string {
 	return path.Join(b.ModulesPath, b.Name)
+}
+
+func (b *CommonModuleBoilerplate) GetModuleRESTDocPath() string {
+	return path.Join(b.RESTDocPath, b.Name)
 }
 
 func (b *CommonModuleBoilerplate) CommonCreate(tmplTypeName string) error {
@@ -58,7 +63,7 @@ func (b *CommonModuleBoilerplate) CommonCreate(tmplTypeName string) error {
 		return err
 	}
 
-	// Create directories and filers from templates in the module
+	// Create directories and files from templates in the module
 	dirs := []string{"models", "repository", "service", "handler"}
 	for _, dir := range dirs {
 		err = b.CreateInModuleDir(dir)
@@ -67,7 +72,7 @@ func (b *CommonModuleBoilerplate) CommonCreate(tmplTypeName string) error {
 		}
 
 		tmplPath := path.Join(b.GetModuleTemplatesPath(), tmplTypeName, fmt.Sprintf("%s.go.tmpl", dir))
-		filePath := path.Join(b.GetModulesPath(), dir, fmt.Sprintf("%s.go", dir))
+		filePath := path.Join(b.GetModulePath(), dir, fmt.Sprintf("%s.go", dir))
 		err = b.CreateFileFromTemplate(tmplPath, filePath, NewModuleTmplData(b.Name))
 		if err != nil {
 			return err
@@ -87,7 +92,7 @@ func (b *CommonModuleBoilerplate) CreateInitFile() error {
 
 func (b *CommonModuleBoilerplate) CreateModuleDir() error {
 	// Create module directory
-	modulePath := b.GetModulesPath()
+	modulePath := b.GetModulePath()
 	if _, err := os.Stat(modulePath); os.IsNotExist(err) {
 		// create directory
 		if err := os.Mkdir(modulePath, 0754); err != nil {
@@ -100,7 +105,7 @@ func (b *CommonModuleBoilerplate) CreateModuleDir() error {
 
 func (b *CommonModuleBoilerplate) CreateInModuleDir(name string) error {
 	// Create directory in the module
-	inModulePath := path.Join(b.GetModulesPath(), name)
+	inModulePath := path.Join(b.GetModulePath(), name)
 	if _, err := os.Stat(inModulePath); os.IsNotExist(err) {
 		// create directory
 		if err := os.Mkdir(inModulePath, 0754); err != nil {
@@ -113,7 +118,7 @@ func (b *CommonModuleBoilerplate) CreateInModuleDir(name string) error {
 
 func (b *CommonModuleBoilerplate) CreateModuleFile(tmplTypeName string) error {
 	moduleTmplPath := path.Join(b.GetModuleTemplatesPath(), tmplTypeName, "module.go.tmpl")
-	moduleFilePath := path.Join(b.GetModulesPath(), fmt.Sprintf("%s.go", b.Name))
+	moduleFilePath := path.Join(b.GetModulePath(), fmt.Sprintf("%s.go", b.Name))
 
 	return b.CreateFileFromTemplate(moduleTmplPath, moduleFilePath, NewModuleTmplData(b.Name))
 }
@@ -145,6 +150,22 @@ func (b *CommonModuleBoilerplate) CreateFileFromTemplate(templateFilePath, fileP
 	return nil
 }
 
+func (b *CommonModuleBoilerplate) RenderFromTemplate(templateFilePath string, data any) (string, error) {
+	tmpl, err := template.ParseFiles(templateFilePath)
+	if err != nil {
+		return "", err
+	}
+
+	var buf bytes.Buffer
+
+	err = tmpl.Execute(&buf, data)
+	if err != nil {
+		return "", err
+	}
+
+	return buf.String(), nil
+}
+
 type InitModuleTmplData struct {
 	MdlName string
 }
@@ -160,4 +181,17 @@ func NewModuleTmplData(name string) ModuleTmplData {
 		MdlName:    name,
 		MdlNameCap: capitalizedName,
 	}
+}
+
+func (b *CommonModuleBoilerplate) CreateRESTDocDir() error {
+	// Create module directory
+	restDocPath := b.GetModuleRESTDocPath()
+	if _, err := os.Stat(restDocPath); os.IsNotExist(err) {
+		// create directory
+		if err := os.Mkdir(restDocPath, 0754); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
