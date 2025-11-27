@@ -5,20 +5,8 @@ type SimpleModuleBoilerplate struct {
 }
 
 func (b *SimpleModuleBoilerplate) Create() (string, error) {
-	// Create init file
-	err := b.CreateInitFile()
-	if err != nil {
-		return "", err
-	}
-
-	// Create module directory
-	err = b.CreateModuleDir()
-	if err != nil {
-		return "", err
-	}
-
-	// Create module file
-	err = b.CreateModuleFile("simple")
+	tmplTypeName := "simple"
+	err := b.CommonCreate(tmplTypeName)
 	if err != nil {
 		return "", err
 	}

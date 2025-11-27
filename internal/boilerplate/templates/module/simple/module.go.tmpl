@@ -1,29 +1,32 @@
 package {{ .MdlName }}
 
 import (
-	"e-backend/internal/models"
-	"net/http"
-
-	"github.com/labstack/echo/v4"
+	internalModels "e-backend/internal/models"
+	"e-backend/modules/{{ .MdlName }}/handler"
+	"e-backend/modules/{{ .MdlName }}/repository"
+	"e-backend/modules/{{ .MdlName }}/service"
 )
 
 type {{ .MdlNameCap }}Module struct {
-	echo *echo.Echo
 }
 
 func (m *{{ .MdlNameCap }}Module) Name() string {
 	return "{{ .MdlNameCap }}"
 }
 
-func (m *{{ .MdlNameCap }}Module) Run(core *models.Core) error {
-	m.echo = core.Echo
-	m.echo.GET("/{{ .MdlName }}", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, true)
-	})
+func (m *{{ .MdlNameCap }}Module) Run(c *internalModels.Core) error {
+	repo := repository.NewRepository(c.DB)
+	services := service.NewService(repo)
+	h := handler.NewHandler(services)
+
+	c.Echo.GET("/{{ .MdlName }}", h.{{ .MdlNameCap }})
+	//	m.echo.GET("/{{ .MdlName }}", func(c echo.Context) error {
+	//		return c.JSON(http.StatusOK, true)
+	//	})
 
 	return nil
 }
 
-func NewModule() models.Module {
+func NewModule() internalModels.Module {
 	return &{{ .MdlNameCap }}Module{}
 }
