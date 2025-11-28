@@ -1,0 +1,19 @@
+post:
+  tags:
+  - Tamagluchi
+  summary: Create new pet
+  description: Create new pet
+  requestBody:
+    description: request body
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./schemas.yml#/schemas/CreatePetRequest"
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "./schemas.yml#/schemas/CreatePetResponse"

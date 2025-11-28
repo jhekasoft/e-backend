@@ -32,6 +32,11 @@ paths:
     $ref: "cv/cv.yml"
   /cv/latex:
     $ref: "cv/latex.yml"
+  
+  /tamagluchi:
+    $ref: "tamagluchi/tamagluchi.yml"
+  /tamagluchi/calculate:
+    $ref: "tamagluchi/calculate.yml"
 components:
   securitySchemes:
     BearerAuth:

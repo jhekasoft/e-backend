@@ -1,0 +1,102 @@
+schemas:
+  Pet:
+    type: object
+    properties:
+      Name:
+        type: string
+        example: "Fluffy"
+      Age:
+        type: number
+        format: float64
+        example: 0
+      Type:
+        type: string
+        example: "cat"
+
+  PetMainValues:
+    type: object
+    properties:
+      Food:
+        type: integer
+        minimum: 0
+        maximum: 100
+        example: 50
+      Water:
+        type: integer
+        minimum: 0
+        maximum: 100
+        example: 50
+      Rest:
+        type: integer
+        minimum: 0
+        maximum: 100
+        example: 50
+      Joy:
+        type: integer
+        minimum: 0
+        maximum: 100
+        example: 50
+      Health:
+        type: integer
+        minimum: 0
+        maximum: 100
+        example: 50
+  
+  PetSecondaryValues:
+    type: object
+    properties:
+      IsResting:
+        type: boolean
+        example: false
+  
+  HouseValues:
+    type: object
+    properties:
+      IsHeaped:
+        type: boolean
+        example: false
+
+  TamagluchiState:
+    type: object
+    properties:
+      Pet:
+        $ref: '#/schemas/Pet'
+      MainValues:
+        $ref: '#/schemas/PetMainValues'
+      SecondaryValues:
+        $ref: '#/schemas/PetSecondaryValues'
+      HouseValues:
+        $ref: '#/schemas/HouseValues'
+
+  CreatePetRequest:
+    type: object
+    properties:
+      Name:
+        type: string
+        example: "Fluffy"
+      Type:
+        type: enum
+        enum: ["cat", "dog"]
+        example: "cat"
+
+  CreatePetResponse:
+    type: object
+    properties:
+      State:
+        $ref: '#/schemas/TamagluchiState'
+
+  CalculateRequest:
+    type: object
+    properties:
+      State:
+        $ref: '#/schemas/TamagluchiState'
+      Period:
+        type: integer
+        description: Time in seconds
+        example: 8
+
+  CalculateResponse:
+    type: object
+    properties:
+      State:
+        $ref: '#/schemas/TamagluchiState'

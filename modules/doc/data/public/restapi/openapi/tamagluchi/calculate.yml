@@ -1,0 +1,19 @@
+post:
+  tags:
+  - Tamagluchi
+  summary: Calculate the state
+  description: Calculate the state after a certain time
+  requestBody:
+    description: request body
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./schemas.yml#/schemas/CalculateRequest"
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: "./schemas.yml#/schemas/CalculateResponse"
