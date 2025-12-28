@@ -1,0 +1,29 @@
+get:
+  tags:
+    - SUM
+  summary: Get word definition
+  description:
+    Get exact word's definition or alternatives
+  # security:
+  # - BearerAuth: []
+  parameters:
+  - name: word
+    in: path
+    description: Word for search
+    required: true
+    schema:
+      type: integer
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              Data:
+                $ref: "./schemas.yml#/schemas/Article"
+              Alternatives:
+                type: array
+                items:
+                  type: string

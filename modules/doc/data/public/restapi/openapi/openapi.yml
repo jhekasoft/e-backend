@@ -37,6 +37,11 @@ paths:
     $ref: "tamagluchi/tamagluchi.yml"
   /tamagluchi/calculate:
     $ref: "tamagluchi/calculate.yml"
+
+  /sum/articles:
+    $ref: "sum/articles.yml"
+  /sum/articles/{word}:
+    $ref: "sum/articles-word.yml"
 components:
   securitySchemes:
     BearerAuth:

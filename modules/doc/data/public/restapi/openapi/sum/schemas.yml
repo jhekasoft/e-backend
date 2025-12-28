@@ -1,0 +1,14 @@
+schemas:
+  Article:
+      type: object
+      properties:
+        Title:
+          type: string
+          example: "КОТИ"
+        Word:
+          type: string
+          example: "КОТИ́"
+        Desc:
+          type: string
+          example: "КОТИ́, ів, мн., діал. Вид теплого, переважно жіночого, взуття."
+
