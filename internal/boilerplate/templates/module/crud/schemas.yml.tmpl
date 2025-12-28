@@ -8,19 +8,6 @@ schemas:
             type: string
             example: "Name"
 
-  {{ .MdlNameCap }}ListFilter:
-    type: object
-    properties:
-      offset:
-        type: integer
-        example: 0
-      limit:
-        type: integer
-        example: 10
-      search:
-        type: string
-        example: "Admin User"
-
   Create{{ .MdlNameCap }}Request:
     type: object
     required:

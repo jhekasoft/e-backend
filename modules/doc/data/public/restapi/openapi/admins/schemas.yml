@@ -20,21 +20,6 @@ schemas:
           Role:
             $ref: '#/schemas/AdminRole'
 
-  AdminListFilter:
-    type: object
-    properties:
-      offset:
-        type: integer
-        example: 0
-      limit:
-        type: integer
-        example: 10
-      role:
-        $ref: '#/schemas/AdminRole'
-      search:
-        type: string
-        example: "Admin User"
-
   CreateAdminRequest:
     type: object
     required:
