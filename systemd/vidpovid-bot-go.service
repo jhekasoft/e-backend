@@ -1,0 +1,17 @@
+[Unit]
+Description=e-backend
+After=network-online.target
+Wants=network-online.target systemd-networkd-wait-online.service
+
+StartLimitIntervalSec=500
+StartLimitBurst=5
+
+[Service]
+Restart=on-failure
+RestartSec=5s
+
+WorkingDirectory=/opt/e-backend
+ExecStart=/opt/e-backend/e-backend
+
+[Install]
+WantedBy=multi-user.target
