@@ -16,6 +16,9 @@ func NewService(repo *repository.Repository) *Service {
 }
 
 func (s *Service) GetManyWithTotal(filter models.ArticleListFilter) (items []models.Article, total int64, err error) {
+	// Filter acute accents
+	filter.Search = s.filterWord(filter.Search)
+
 	items, err = s.repo.GetMany(filter)
 	if err != nil {
 		return
@@ -29,6 +32,9 @@ func (s *Service) GetWordOrAlternatives(title string) (item *models.Article, alt
 	// Always slice (not nil)
 	alts = make([]string, 0)
 
+	// Filter acute accents
+	title = s.filterWord(title)
+
 	items, err := s.repo.GetMany(models.ArticleListFilter{
 		ListFilter: crud.ListFilter{Limit: 10, Offset: 0},
 		Search:     title,
@@ -41,9 +47,12 @@ func (s *Service) GetWordOrAlternatives(title string) (item *models.Article, alt
 		return
 	}
 
-	// Exact word
-	if items[0].Title != nil && strings.EqualFold(*items[0].Title, title) {
-		item = &items[0]
+	// Search exact word
+	for _, it := range items {
+		if it.Title != nil && strings.EqualFold(*it.Title, title) {
+			item = &it
+			return
+		}
 	}
 
 	// Alternatives
@@ -55,4 +64,10 @@ func (s *Service) GetWordOrAlternatives(title string) (item *models.Article, alt
 	}
 
 	return
+}
+
+func (s *Service) filterWord(word string) string {
+	// Replace acute accents
+	// Example: АБОНУВА́ТИСЯ -> АБОНУВАТИСЯ
+	return strings.Replace(word, "\u0301", "", -1)
 }
