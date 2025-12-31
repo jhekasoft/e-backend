@@ -56,7 +56,7 @@ Run binary:
 
 ```bash
 sudo mkdir /opt/e-backend
-sudo cp ./build /opt/e-backend -r
+sudo cp ./build/* /opt/e-backend -r
 sudo cp /opt/e-backend/.e-backend.example /opt/e-backend/.e-backend
 sudo cp ./systemd/e-backend.service /etc/systemd/system/
 sudo systemctl daemon-reload
