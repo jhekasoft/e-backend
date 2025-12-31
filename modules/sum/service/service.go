@@ -42,9 +42,8 @@ func (s *Service) GetWordOrAlternatives(title string) (item *models.Article, alt
 	}
 
 	// Exact word
-	if items[0].Title != nil && strings.ToLower(*items[0].Title) == strings.ToLower(title) {
+	if items[0].Title != nil && strings.EqualFold(*items[0].Title, title) {
 		item = &items[0]
-		return
 	}
 
 	// Alternatives
