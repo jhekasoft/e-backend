@@ -42,6 +42,8 @@ paths:
     $ref: "sum/articles.yml"
   /sum/articles/{word}:
     $ref: "sum/articles-word.yml"
+  /sum/import:
+    $ref: "sum/import.yml"
 components:
   securitySchemes:
     BearerAuth:

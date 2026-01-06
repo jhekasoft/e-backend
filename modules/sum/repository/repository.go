@@ -46,3 +46,10 @@ func (r *Repository) getListQuery(filter models.ArticleListFilter) *gorm.DB {
 
 	return tx
 }
+
+func (r *Repository) CreateInBatches(items []models.Article) (affected int64, err error) {
+	result := r.db.CreateInBatches(items, 1000)
+	err = result.Error
+	affected = result.RowsAffected
+	return
+}

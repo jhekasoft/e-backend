@@ -1,0 +1,18 @@
+post:
+  tags:
+    - SUM
+  summary: Import DB
+  description:
+    Import DB from SQLite file (./modules/sum/data/import.db)
+  # security:
+  # - BearerAuth: []
+  responses:
+    200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              Affected:
+                type: integer

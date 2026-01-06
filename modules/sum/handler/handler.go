@@ -40,6 +40,10 @@ type ArticleListResponse struct {
 	Total  int64
 }
 
+type ImportResponse struct {
+	Affected int64
+}
+
 type ArticleWordResponse struct {
 	Data         *models.Article
 	Alternatives []string
@@ -87,6 +91,18 @@ func (h *Handler) GetWord(c echo.Context) error {
 	resp := ArticleWordResponse{
 		Data:         item, // TODO: make mapping to the API type
 		Alternatives: alternatives,
+	}
+	return c.JSON(http.StatusOK, resp)
+}
+
+func (h *Handler) Import(c echo.Context) error {
+	affected, err := h.service.Import()
+	if err != nil {
+		return err
+	}
+
+	resp := ImportResponse{
+		Affected: affected,
 	}
 	return c.JSON(http.StatusOK, resp)
 }
