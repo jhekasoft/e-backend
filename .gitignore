@@ -1,2 +1,3 @@
 /build
 .e-backend
+/modules/sum/data/*.db

@@ -4,7 +4,11 @@ import (
 	"e-backend/internal/crud"
 	"e-backend/modules/sum/models"
 	"e-backend/modules/sum/repository"
+	"log"
 	"strings"
+
+	"github.com/glebarez/sqlite"
+	"gorm.io/gorm"
 )
 
 type Service struct {
@@ -70,4 +74,36 @@ func (s *Service) filterWord(word string) string {
 	// Replace acute accents
 	// Example: АБОНУВА́ТИСЯ -> АБОНУВАТИСЯ
 	return strings.Replace(word, "\u0301", "", -1)
+}
+
+func (s *Service) Import() (affected int64, err error) {
+	dbPath := "./modules/sum/data/import.db"
+
+	var importItems []models.ImportLink
+	importDB, err := gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
+	if err != nil {
+		return
+	}
+
+	q := importDB.Where("desc IS NOT NULL AND type = ?", "article")
+	err = q.Find(&importItems).Error
+	if err != nil {
+		return
+	}
+
+	var insertItems []models.Article
+	for i, item := range importItems {
+		log.Printf("Link %d: %s\n", i, item.URL)
+
+		insertItems = append(insertItems, models.Article{
+			Model: gorm.Model{ID: item.ID},
+			Type:  item.Type,
+			Word:  item.Word,
+			Desc:  item.Desc,
+			Title: item.Title,
+		})
+	}
+
+	affected, err = s.repo.CreateInBatches(insertItems)
+	return
 }
