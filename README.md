@@ -71,3 +71,19 @@ go run -tags="all dev" main.go module create [name] -t crud
 
 Where `name` is name of module is `lowerCamelCase`, `-t` is template name
 (simple, crud).
+
+# Run with docker
+
+Build image:
+
+```bash
+docker build -f dockerfiles/Dockerfile -t e-backend .
+```
+
+Run:
+
+```bash
+docker run --name e-backend --rm --network host \
+-v "$(pwd)/.e-backend:/app/.e-backend" \
+e-backend
+```

@@ -48,4 +48,10 @@ test:
 	$(info ************ RUNNING TESTS ************)
 	go test ./...
 
-.PHONY: all doc run
+sum: clean build-sum doc data
+
+build-sum:
+	$(info ************ BUILDING EXECUTABLE FILE ************)
+	go build -ldflags "$(LDFLAGS)" -tags="health doc sum" -o ./build/e-backend
+
+.PHONY: all doc run sum
