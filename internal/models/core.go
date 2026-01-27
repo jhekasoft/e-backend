@@ -12,7 +12,7 @@ type Core struct {
 	BuildTime string
 	Config    Config
 	Echo      *echo.Echo
-	MQTT      mqtt.Client
+	MQTT      *mqtt.Client
 	DB        *gorm.DB
 	Trans     *ut.Translator
 }

@@ -24,8 +24,9 @@ type ConfigDB struct {
 }
 
 type ConfigMQTT struct {
-	Port uint16
-	Host string
+	Enabled bool
+	Port    uint16
+	Host    string
 }
 
 type ConfigHTTP struct {

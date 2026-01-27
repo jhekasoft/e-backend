@@ -81,22 +81,25 @@ func (a *HTTPApp) Run() {
 	a.Core.Trans = &trans
 
 	// Prepare MQTT
-	var mqttConnectHandler mqtt.OnConnectHandler = func(client mqtt.Client) {
-		fmt.Println("MQTT connected")
+	if config.MQTT.Enabled {
+		var mqttConnectHandler mqtt.OnConnectHandler = func(client mqtt.Client) {
+			fmt.Println("MQTT connected")
+		}
+		var mqttConnectLostHandler mqtt.ConnectionLostHandler = func(client mqtt.Client, err error) {
+			fmt.Printf("MQTT connection lost: %v", err)
+		}
+
+		mqttOpts := mqtt.NewClientOptions()
+		mqttOpts.AddBroker(fmt.Sprintf("tcp://%s:%d", config.MQTT.Host, config.MQTT.Port))
+		mqttOpts.SetClientID("e-backend_client")
+		mqttOpts.OnConnect = mqttConnectHandler
+		mqttOpts.OnConnectionLost = mqttConnectLostHandler
+		mqttClient := mqtt.NewClient(mqttOpts)
+		if mqttToken := mqttClient.Connect(); mqttToken.Wait() && mqttToken.Error() != nil {
+			log.Fatalf("MQTT init error: %v\n", mqttToken.Error())
+		}
+		a.Core.MQTT = &mqttClient
 	}
-	var mqttConnectLostHandler mqtt.ConnectionLostHandler = func(client mqtt.Client, err error) {
-		fmt.Printf("MQTT connection lost: %v", err)
-	}
-	mqttOpts := mqtt.NewClientOptions()
-	mqttOpts.AddBroker(fmt.Sprintf("tcp://%s:%d", config.MQTT.Host, config.MQTT.Port))
-	mqttOpts.SetClientID("e-backend_client")
-	mqttOpts.OnConnect = mqttConnectHandler
-	mqttOpts.OnConnectionLost = mqttConnectLostHandler
-	mqttClient := mqtt.NewClient(mqttOpts)
-	if mqttToken := mqttClient.Connect(); mqttToken.Wait() && mqttToken.Error() != nil {
-		log.Fatalf("MQTT init error: %v\n", mqttToken.Error())
-	}
-	a.Core.MQTT = mqttClient
 
 	// Prepare HTTP-server
 	a.Core.Echo = echo.New()

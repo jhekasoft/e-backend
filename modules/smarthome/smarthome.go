@@ -22,7 +22,9 @@ func (m *SmartHomeModule) Run(c *internalModels.Core) error {
 	services := service.NewService(repo)
 	h := handler.NewHandler(services)
 
-	c.MQTT.Subscribe("smarthome/+/+/+/sensor/meteo", 0, h.MQTTSensorValue)
+	if c.MQTT != nil {
+		(*c.MQTT).Subscribe("smarthome/+/+/+/sensor/meteo", 0, h.MQTTSensorValue)
+	}
 
 	return nil
 }

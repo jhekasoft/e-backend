@@ -88,7 +88,9 @@ func initConfig() {
 	// Defaults
 	viper.SetDefault("Mode", models.AppModeProduction)
 	viper.SetDefault("HTTP", models.ConfigHTTP{Port: 1988, BaseURL: "http://localhost:1988"})
-	viper.SetDefault("MQTT", models.ConfigMQTT{Host: "localhost", Port: 1883})
+	viper.SetDefault("MQTT.Enabled", false)
+	viper.SetDefault("MQTT.Host", "localhost")
+	viper.SetDefault("MQTT.Port", 1883)
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
