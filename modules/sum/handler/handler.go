@@ -4,6 +4,7 @@ import (
 	"e-backend/internal/crud"
 	"e-backend/modules/sum/models"
 	"e-backend/modules/sum/service"
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -77,6 +78,12 @@ func (h *Handler) GetWord(c echo.Context) error {
 	wordParam := c.Param("word")
 	if len(wordParam) < 1 {
 		return echo.NewHTTPError(http.StatusNotFound, "not found")
+	}
+
+	// Redirect to the site if the query parameter "site-redirect" is set
+	if c.QueryParam("site-redirect") == "true" {
+		// TODO: move to the config hardcoded URL
+		return c.Redirect(http.StatusTemporaryRedirect, fmt.Sprintf("https://sum11.pp.ua/?word=%s", wordParam))
 	}
 
 	item, alternatives, err := h.service.GetWordOrAlternatives(wordParam)
