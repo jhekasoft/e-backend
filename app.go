@@ -55,18 +55,20 @@ func (a *HTTPApp) Run(modules []models.Module, version, buildTime string) {
 	config := a.Core.Config
 
 	// Connect to the database
-	dbLogLevel := logger.Error
-	if config.IsDevelop() {
-		dbLogLevel = logger.Info
+	if config.DB.Enabled {
+		dbLogLevel := logger.Error
+		if config.IsDevelop() {
+			dbLogLevel = logger.Info
+		}
+		db, err := gorm.Open(postgres.Open(config.DB.DSN), &gorm.Config{
+			TranslateError: true,
+			Logger:         logger.Default.LogMode(dbLogLevel),
+		})
+		if err != nil {
+			log.Fatalf("Database connection error: %v\n", err)
+		}
+		a.Core.DB = db
 	}
-	db, err := gorm.Open(postgres.Open(config.DB.DSN), &gorm.Config{
-		TranslateError: true,
-		Logger:         logger.Default.LogMode(dbLogLevel),
-	})
-	if err != nil {
-		log.Fatalf("Database connection error: %v\n", err)
-	}
-	a.Core.DB = db
 
 	// Prepare translator
 	uk := uk.New()

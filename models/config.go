@@ -20,7 +20,8 @@ func (c *Config) IsDevelop() bool {
 }
 
 type ConfigDB struct {
-	DSN string
+	Enabled bool
+	DSN     string
 }
 
 type ConfigMQTT struct {
