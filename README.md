@@ -1,14 +1,14 @@
 # e-backend
 
-`e-backend` is a backend for all the projects.
-
-![cat](./assets/android-chrome-192x192.png)
-
 ```
 ░█▀▀░█▀▄░█▀█░█▀▀░█░█░█▀▀░█▀█░█▀▄
 ░█▀▀░█▀▄░█▀█░█░░░█▀▄░█▀▀░█░█░█░█
 ░▀▀▀░▀▀░░▀░▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀░
 ```
+
+`e-backend` is a backend for all the projects.
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/jhekasoft/e-backend)](https://goreportcard.com/report/github.com/jhekasoft/e-backend)
 
 ## Example
 
