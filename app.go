@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/jhekasoft/e-backend/cmd"
 	internalHttp "github.com/jhekasoft/e-backend/http"
 	"github.com/jhekasoft/e-backend/models"
 
@@ -121,7 +122,7 @@ func (a *HTTPApp) Run(modules []models.Module, version, buildTime string) {
 
 	// Run modules
 	for _, m := range modules {
-		fmt.Printf("Run module %s\n", m.Name())
+		fmt.Printf("%s %s\n", cmd.ColorSuccess.Sprint("Run module"), m.Name())
 		err := m.Run(&a.Core)
 		if err != nil {
 			log.Fatalf("Module run error: %v\n", err)
