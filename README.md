@@ -9,6 +9,8 @@
 `e-backend` is a backend for all the projects.
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/jhekasoft/e-backend)](https://goreportcard.com/report/github.com/jhekasoft/e-backend)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/jhekasoft/e-backend)
+
 
 ## Example
 
