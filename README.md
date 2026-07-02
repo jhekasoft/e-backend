@@ -8,9 +8,9 @@
 
 `e-backend` is a backend for all the projects.
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/jhekasoft/e-backend)](https://goreportcard.com/report/github.com/jhekasoft/e-backend)
 ![GitHub Release](https://img.shields.io/github/v/release/jhekasoft/e-backend?display_name=tag&logo=go&label=e-backend&color=%230279BA)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/jhekasoft/e-backend)
+![GitHub License](https://img.shields.io/github/license/jhekasoft/e-backend)
 
 ## Get started
 
@@ -22,7 +22,7 @@ Install the latest version of `e-backend-cli`:
 go install github.com/jhekasoft/e-backend-cli@latest
 ```
 
-## Generate a new project
+### Generate a new project
 
 ```bash
 e-backend-cli app create my-ebackend-app
@@ -67,7 +67,7 @@ You should see the following output:
 {"OK":true,"Version":"1.0.0","BuildTime":"2026-07-02T03:35:57+03:00"}
 ```
 
-## Generate a new module
+### Generate a new module
 
 Simple module:
 
